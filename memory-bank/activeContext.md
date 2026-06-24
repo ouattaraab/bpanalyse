@@ -13,21 +13,25 @@
 
 Base de données locale : user `aboubakarouattara` (Homebrew), base `bp_explorer` créée, migrations Laravel + pgvector appliquées.
 
+## État : PHASE 0 (Epic 1 — ingestion) COMPLÈTE ✅
+Pipeline de bout en bout opérationnel et testé : `bp:ingest` → intake → parse (Docling) →
+chunk (1 tableau = 1 chunk) → embeddings bge-m3 (pgvector) → extraction financière déterministe.
+Tests globaux : **53 passés**. Tout poussé sur `main`.
+
 ## Prochaine action
-**Phase 0 — Epic 1, story 0-x** (orchestration) via `/implement-story` : commande
-`php artisan bp:ingest {file} {--tenant=}` + `IngestionPipeline` chaînant intake →
-ParseDocumentJob → ChunkDocumentJob → EmbedChunksJob → ExtractFinancialsJob.
-Test : pipeline complet sur fixture (statuts uploaded→indexed, comptes attendus).
-➡️ Clôt Epic 1 / Phase 0. Ensuite Phase 1 (FinancialQueryService + chat RAG).
+**Phase 1 — Chat RAG sourcé + outil de calcul** (Epics 2.1-2.2 + 1.5b) :
+1. Socle session/audit/retriever : migrations `explorer_sessions`, `interactions`, `audit_logs` ;
+   `SessionService`, `AuditLogger`, `Retriever` (recherche cosine pgvector + filtre métadonnées).
+2. `FinancialQueryService` (implémente `StructuredDataService`) : requêtes whitelistées
+   déterministes sur `financial_metrics` + `capabilities()` (outils pour function calling).
+3. Story 2.1 : `RagService` (retrieve → prompt FR « ne calcule pas » → LlmManager::for('chat')
+   → réponse + citations), `ChatController`, audit. Chiffres via FinancialQueryService.
+4. Story 2.2 : STT Deepgram (`DeepgramSttClient::transcribe`), `TranscriptionController`.
 
-Story 1.5 livrée : extraction financière **déterministe (aucun LLM)**.
-- `FinancialValueParser` (FR/EN, %, négatifs, parenthèses, milliers ; valeur verbatim, échelle = unité),
-  `FinancialTableExtractor` (grille → ParsedMetric), `ExtractFinancialsJob` (ignore tableaux non
-  financiers, trace source_ref), migrations+modèles `financial_tables`/`financial_metrics`.
-- Tests : 18 (dataset parseur, extracteur, job + garde « LlmClient jamais sollicité »).
-  Validé sur le PRD réel : 13 tableaux → 84 mesures. Tests globaux : 50 passés.
+Story 1.5 livrée : extraction financière déterministe (FinancialValueParser FR/EN, extracteur,
+ExtractFinancialsJob, financial_tables/financial_metrics). Validé sur le PRD : 13 tableaux → 84 mesures.
 
-Note 1.4 : modèle réel bge-m3 — validation runtime du download (~2,2 Go) lancée en arrière-plan.
+Note 1.4 : validation runtime du modèle réel bge-m3 (download ~2,2 Go) lancée en arrière-plan.
 
 Story 1.2 livrée : intégration Docling en **Python via process**.
 - `tools/docling/parse.py` (venv dédié `tools/docling/.venv`, requirements.txt) → JSON structuré.

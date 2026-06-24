@@ -7,14 +7,13 @@
 - Kit de démarrage : CLAUDE.md, docs, interfaces IA, config/ai.php, memory-bank.
 
 ## En cours
-- Étape 1 BOOTSTRAP terminée : plan détaillé dans `memory-bank/implementationPlan.md`.
-- Étape 2 (scaffolding) **terminée et vérifiée** : Laravel 11.54, PostgreSQL 17 + pgvector 0.8.3,
-  Reverb (WebSocket), routing API, Pest. Bindings IA câblés (managers + providers concrets).
-  Front React 18 + Vite + Tailwind 3 + Reveal.js + Echo (build OK). Tests : 7 passés.
-- Story 1.1 (upload BP) **terminée** : tenants/documents, disque privé `documents` isolé
-  par tenant, DocumentController + StoreDocumentRequest (mimes pdf/pptx, max 50 Mo) +
-  DocumentIntakeService + DocumentResource (sans chemin interne). Base de test pgsql dédiée
-  `bp_explorer_testing`. Prochaine action : story 1.2 (parsing Docling).
+- Scaffolding + **Phase 0 (Epic 1) COMPLÈTE** : Laravel 11.54, PostgreSQL 17 + pgvector 0.8.3,
+  Reverb, routing API, Pest ; bindings IA (managers + providers) ; front React 18/Vite/Tailwind/
+  Reveal.js/Echo. Pipeline d'ingestion bout en bout (`bp:ingest`) : intake → Docling → chunking →
+  embeddings bge-m3 souverains → extraction financière déterministe. **53 tests verts.** Poussé sur `main`.
+- Outils Python souverains via process : `tools/docling/` (parsing) et `tools/embeddings/` (bge-m3),
+  venvs gitignorés.
+- Prochaine action : **Phase 1** (chat RAG sourcé + FinancialQueryService + STT).
 
 ## À faire (par phase — détail dans implementationPlan.md)
 
@@ -29,7 +28,8 @@
       (validation runtime du modèle réel bge-m3 en cours : 1er téléchargement ~2,2 Go)
 - [x] 1.5 — Extraction tableaux financiers en SQL `[financial_tables, financial_metrics]` — 18 tests verts ;
       validé sur le PRD réel (13 tableaux → 84 mesures, 100% déterministe, aucun LLM)
-- [ ] 0-x — Commande `bp:ingest` (orchestration pipeline)
+- [x] 0-x — Commande `bp:ingest` + `IngestionPipeline` (chaîne parse→chunk→embed→financials) — 3 tests verts
+      ✅ **PHASE 0 / EPIC 1 COMPLÈTE** — pipeline d'ingestion de bout en bout (uploaded → indexed)
 
 ### Phase 1 — Chat RAG + outil de calcul (Epics 2.1-2.2, 1.5)
 - [ ] Socle session/audit/retriever `[explorer_sessions, interactions, audit_logs]`
