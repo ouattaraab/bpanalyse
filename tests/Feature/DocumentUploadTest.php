@@ -3,16 +3,22 @@
 declare(strict_types=1);
 
 use App\Enums\DocumentStatus;
+use App\Jobs\ChunkDocumentJob;
+use App\Jobs\EmbedChunksJob;
+use App\Jobs\ExtractFinancialsJob;
+use App\Jobs\ParseDocumentJob;
 use App\Models\Document;
 use App\Models\Tenant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
     Storage::fake('documents');
+    Bus::fake(); // l'upload déclenche le pipeline d'ingestion (chaîne de jobs)
 });
 
 it('téléverse un BP PDF valide et le crée au statut uploaded', function () {
@@ -89,4 +95,20 @@ it("n'expose jamais le chemin de stockage interne", function () {
     ])->assertCreated();
 
     expect($response->json('data'))->not->toHaveKey('original_path');
+});
+
+it('rattache au tenant « default » et lance le pipeline sans tenant fourni', function () {
+    $this->postJson('/api/documents', [
+        'file' => UploadedFile::fake()->createWithContent('bp.pdf', "%PDF-1.4\n"),
+    ])->assertCreated();
+
+    $document = Document::firstOrFail();
+    expect($document->tenant->slug)->toBe('default');
+
+    Bus::assertChained([
+        ParseDocumentJob::class,
+        ChunkDocumentJob::class,
+        EmbedChunksJob::class,
+        ExtractFinancialsJob::class,
+    ]);
 });

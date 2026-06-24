@@ -13,6 +13,7 @@ Route::get('/user', function (Request $request) {
 
 // --- Ingestion (Epic 1) ---
 Route::post('/documents', [DocumentController::class, 'store']);
+Route::get('/documents/{document}', [DocumentController::class, 'show']);
 
 // --- Session + Chat RAG (Epic 2) ---
 Route::post('/documents/{document}/sessions', [SessionController::class, 'store']);

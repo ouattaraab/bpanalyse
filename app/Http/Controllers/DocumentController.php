@@ -8,18 +8,22 @@ use App\Http\Requests\StoreDocumentRequest;
 use App\Http\Resources\DocumentResource;
 use App\Models\Tenant;
 use App\Services\Ingestion\DocumentIntakeService;
+use App\Services\Ingestion\IngestionPipeline;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Téléversement d'un BP. Aucune logique métier ici : la réception est déléguée
- * à DocumentIntakeService (convention projet : pas de métier dans les contrôleurs).
+ * à DocumentIntakeService, puis le pipeline d'ingestion est lancé (asynchrone).
  */
 class DocumentController extends Controller
 {
-    public function store(StoreDocumentRequest $request, DocumentIntakeService $intake): JsonResponse
-    {
-        $tenant = Tenant::findOrFail($request->integer('tenant_id'));
+    public function store(
+        StoreDocumentRequest $request,
+        DocumentIntakeService $intake,
+        IngestionPipeline $pipeline,
+    ): JsonResponse {
+        $tenant = $this->resolveTenant($request->input('tenant_id'));
 
         $document = $intake->store(
             tenant: $tenant,
@@ -27,8 +31,25 @@ class DocumentController extends Controller
             title: $request->input('title'),
         );
 
+        // Lance parse → chunk → embeddings → extraction financière (file de jobs).
+        $pipeline->dispatch($document);
+
         return DocumentResource::make($document)
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    public function show(Document $document): DocumentResource
+    {
+        return DocumentResource::make($document);
+    }
+
+    private function resolveTenant(?int $tenantId): Tenant
+    {
+        if ($tenantId !== null) {
+            return Tenant::findOrFail($tenantId);
+        }
+
+        return Tenant::firstOrCreate(['slug' => 'default'], ['name' => 'Default']);
     }
 }

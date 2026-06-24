@@ -21,14 +21,20 @@ Base de données locale : user `aboubakarouattara` (Homebrew), base `bp_explorer
 - API REST : `POST /documents`, `/documents/{id}/sessions`, `/sessions/{uuid}/chat`, `/sessions/{uuid}/transcribe`.
 - Tests globaux : **71 passés**. Tout poussé sur `main`.
 
-## Prochaine action — au choix
-**Option A — Phase 2 (présentation express, le différenciateur)** : `SlideSelector` (3-6 slides),
-`NarrationGenerator` (script JSON `[{slide_id, narration, duree}]`, routage `presentation`→Groq),
-`PresentationService` + jobs, table `presentations`, TTS par slide, front Reveal.js synchronisé.
-**Option B — Front React des features Phase 1** (chat vocal) : `resources/js/features/chat` brancher
-sur l'API existante (la coquille React actuelle est encore la page d'accueil placeholder).
+## Front chat vocal livré ✅
+`resources/js/` : `lib/api.js`, `features/upload/UploadPanel`, `features/chat/{ChatPanel, useChat,
+useAudioRecorder, SourceList, messages}`, `components/App` (orchestration upload→session→chat +
+suivi statut ingestion). Backend : upload déclenche le pipeline, `tenant_id` optionnel (tenant
+`default`), nouvel endpoint `GET /documents/{id}`. Vitest (jsdom + RTL) configuré : 5 tests verts.
+Tests : 72 backend + 5 front. Build front OK.
 
-Backend prêt et testé pour les deux. Recommandation : Phase 2 (cœur de valeur) puis revenir au front.
+Pour une démo complète : `php artisan queue:work` (dérouler l'ingestion) + `npm run dev` + `php artisan serve`.
+
+## Prochaine action — au choix
+**Phase 2 (présentation express, différenciateur)** : `SlideSelector` (3-6 slides), `NarrationGenerator`
+(JSON `[{slide_id, narration, duree}]`, routage `presentation`→Groq), `PresentationService` + jobs,
+table `presentations`, TTS par slide, front Reveal.js synchronisé.
+**Ou Phase 3 (débat du board)** : orchestrateur 4 personas + vérification chiffres (function calling → Claude).
 
 Story 1.2 livrée : intégration Docling en **Python via process**.
 - `tools/docling/parse.py` (venv dédié `tools/docling/.venv`, requirements.txt) → JSON structuré.

@@ -40,8 +40,10 @@
       (RagService, ChatController + SessionController, AnswerResource ; prompt anti-calcul, audit)
 - [x] 2.2 — Question orale (STT Deepgram, transcription) — 5 tests verts
       (DeepgramSttClient HTTP réel + fakeable, TranscriptionController, validation audio)
-      ✅ **PHASE 1 (backend) COMPLÈTE** — chat RAG sourcé + STT + outil de calcul déterministe
-      ⚠ UI React des features (chat, etc.) non encore construite — backend API prêt et testé
+      ✅ **PHASE 1 COMPLÈTE** — chat RAG sourcé + STT + outil de calcul déterministe
+- [x] Front React chat vocal : UploadPanel → session → ChatPanel (question écrite/orale, réponse
+      sourcée, suivi statut d'ingestion). api.js, useChat, useAudioRecorder, SourceList.
+      Upload déclenche le pipeline (tenant `default` si absent). Vitest : 5 tests verts ; build OK.
 
 ### Phase 2 — Présentation express (Epic 3) · différenciateur
 - [ ] 3.1 — Sélection 3-6 slides

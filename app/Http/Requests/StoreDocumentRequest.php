@@ -25,7 +25,8 @@ class StoreDocumentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tenant_id' => ['required', 'integer', 'exists:tenants,id'],
+            // Optionnel : à défaut, le document est rattaché au tenant « default ».
+            'tenant_id' => ['nullable', 'integer', 'exists:tenants,id'],
             'title' => ['nullable', 'string', 'max:255'],
             'file' => ['required', 'file', 'mimes:pdf,pptx', 'max:'.self::MAX_KILOBYTES],
         ];
