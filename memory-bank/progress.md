@@ -27,7 +27,8 @@
       validé sur le PRD réel (13 chunks tableau + 19 texte)
 - [x] 1.4 — Embeddings bge-m3 (Python via process, souverain) → pgvector + index HNSW cosine — 6 tests verts
       (validation runtime du modèle réel bge-m3 en cours : 1er téléchargement ~2,2 Go)
-- [ ] 1.5 — Extraction tableaux financiers en SQL `[financial_tables, financial_metrics]`
+- [x] 1.5 — Extraction tableaux financiers en SQL `[financial_tables, financial_metrics]` — 18 tests verts ;
+      validé sur le PRD réel (13 tableaux → 84 mesures, 100% déterministe, aucun LLM)
 - [ ] 0-x — Commande `bp:ingest` (orchestration pipeline)
 
 ### Phase 1 — Chat RAG + outil de calcul (Epics 2.1-2.2, 1.5)

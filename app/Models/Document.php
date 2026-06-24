@@ -55,4 +55,16 @@ class Document extends Model
     {
         return $this->hasMany(Chunk::class);
     }
+
+    /** @return HasMany<FinancialTable, $this> */
+    public function financialTables(): HasMany
+    {
+        return $this->hasMany(FinancialTable::class);
+    }
+
+    /** @return HasMany<FinancialMetric, $this> */
+    public function financialMetrics(): HasMany
+    {
+        return $this->hasMany(FinancialMetric::class);
+    }
 }
