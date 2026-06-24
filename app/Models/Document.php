@@ -49,4 +49,10 @@ class Document extends Model
     {
         return $this->hasMany(DocumentSlide::class)->orderBy('slide_index');
     }
+
+    /** @return HasMany<Chunk, $this> */
+    public function chunks(): HasMany
+    {
+        return $this->hasMany(Chunk::class);
+    }
 }

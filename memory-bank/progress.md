@@ -22,8 +22,9 @@
 - [x] 0a — Scaffolding Laravel 11 + bindings interfaces (managers + providers concrets)
 - [x] 1.1 — Upload BP (PDF/PPTX), isolé tenant `[tenants, documents]` — 6 tests verts
 - [x] 1.2 — Parsing Docling (Python via process), tableaux préservés `[document_slides]` — 6 tests verts
-      ⚠ validation runtime de tools/docling/parse.py contre Docling réel en attente (install venv en cours)
-- [ ] 1.3 — Chunking sémantique (1 tableau = 1 chunk) `[chunks]`
+      ✓ validé runtime : Docling 2.x installé (venv), parse.py + chaîne PHP→Python OK sur un vrai doc (tableaux préservés)
+- [x] 1.3 — Chunking sémantique (1 tableau = 1 chunk) `[chunks]` — 7 tests verts ;
+      validé sur le PRD réel (13 chunks tableau + 19 texte)
 - [ ] 1.4 — Embeddings FR → pgvector (index cosine)
 - [ ] 1.5 — Extraction tableaux financiers en SQL `[financial_tables, financial_metrics]`
 - [ ] 0-x — Commande `bp:ingest` (orchestration pipeline)

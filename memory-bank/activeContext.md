@@ -14,19 +14,27 @@
 Base de données locale : user `aboubakarouattara` (Homebrew), base `bp_explorer` créée, migrations Laravel + pgvector appliquées.
 
 ## Prochaine action
-**Phase 0 — Epic 1, story 1.3** (chunking sémantique) via `/implement-story 1.3` :
-`SemanticChunker` (règle absolue : 1 tableau = 1 chunk avec sa légende ; texte par section),
-`ChunkDocumentJob`, migration `chunks` (document_id, slide_id, section, type text|table,
-content, metadata jsonb, embedding vector(1024) nullable). Test : un tableau d'entrée → 1 chunk `table`.
+**Phase 0 — Epic 1, story 1.4** (embeddings + indexation pgvector) via `/implement-story 1.4` :
+implémenter `BgeM3EmbeddingClient::embed()` (HTTP vers service bge-m3, dim 1024),
+`EmbedChunksJob` (peuple `chunks.embedding` par batch), index vectoriel HNSW/cosine sur
+`chunks.embedding`, statut document → `indexed`. Embedding image/slide : optionnel (à décider).
+Tests : embeddings écrits, dim conforme, client mocké. Décider du service bge-m3 local
+(ex. conteneur d'inférence) ou fallback ; sinon stub jusqu'à disponibilité.
+
+Story 1.3 livrée : `SemanticChunker` (1 tableau = 1 chunk avec légende ; texte par section,
+section via titres Markdown), `ChunkDocumentJob` (idempotent), migration + modèle `chunks`
+(colonne `embedding vector(1024)` ajoutée via ALTER guardé pgsql, hors $fillable).
+Validé sur le PRD réel : 13 chunks tableau + 19 texte. Tests globaux : 26 passés.
 
 Story 1.2 livrée : intégration Docling en **Python via process**.
 - `tools/docling/parse.py` (venv dédié `tools/docling/.venv`, requirements.txt) → JSON structuré.
 - PHP : interface `DocumentParser` + DTOs `ParsedDocument`/`ParsedSlide`, `DoclingParser`
   (Symfony Process), `ParseDocumentJob` (parsing → parsed/failed), config `config/ingestion.php`,
   migration + modèle `document_slides`. Tests : 6 (wrapper via stub Python, job avec parser mocké).
-- ⚠ EN ATTENTE : validation runtime de `parse.py` contre Docling réel (install venv en arrière-plan,
-  longue car torch + modèles). À faire dès l'install terminée : parser un vrai document et ajuster
-  `parse.py` si l'API Docling diffère (export tableaux / iterate_items selon version).
+- ✓ VALIDÉ RUNTIME : Docling 2.x installé dans le venv ; `parse.py` puis la chaîne complète
+  PHP→Python (`app(DocumentParser::class)->parse(...)`) testés sur un vrai document (docx) →
+  JSON conforme, tableaux préservés (pipes présents). Note : un docx donne page_count=1
+  (non paginé) → repli 1 slide ; la segmentation multi-pages s'exprimera sur PDF/PPTX.
 Tests globaux : 19 passés.
 
 ## Note environnement
