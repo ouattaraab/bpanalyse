@@ -3,7 +3,8 @@ import { useChat } from './useChat';
 import { useAudioRecorder } from './useAudioRecorder';
 import SourceList from './SourceList';
 import PresentationPlayer from '../presentation/PresentationPlayer';
-import { createPresentation } from '../../lib/api';
+import DebateView from '../debate/DebateView';
+import { createPresentation, startDebate } from '../../lib/api';
 
 /** Chat vocal RAG : question écrite ou orale, réponse sourcée. */
 export default function ChatPanel({ session }) {
@@ -14,6 +15,9 @@ export default function ChatPanel({ session }) {
     const [presentation, setPresentation] = useState(null);
     const [presoLoading, setPresoLoading] = useState(false);
     const [presoError, setPresoError] = useState(null);
+
+    const [debate, setDebate] = useState(null);
+    const [debateLoading, setDebateLoading] = useState(false);
 
     const launchPresentation = async () => {
         const question = input.trim();
@@ -27,6 +31,21 @@ export default function ChatPanel({ session }) {
             setPresoError(e.message || "La présentation n'a pas pu être générée.");
         } finally {
             setPresoLoading(false);
+        }
+    };
+
+    const launchDebate = async () => {
+        const question = input.trim();
+        if (!question || debateLoading) return;
+        setPresoError(null);
+        setDebateLoading(true);
+        try {
+            const result = await startDebate(session.uuid, question, 2);
+            setDebate(result);
+        } catch (e) {
+            setPresoError(e.message || "Le débat n'a pas pu être lancé.");
+        } finally {
+            setDebateLoading(false);
         }
     };
 
@@ -60,6 +79,7 @@ export default function ChatPanel({ session }) {
             {presentation && (
                 <PresentationPlayer presentation={presentation} onClose={() => setPresentation(null)} />
             )}
+            {debate && <DebateView debate={debate} onClose={() => setDebate(null)} />}
 
             <div className="flex-1 space-y-4 overflow-y-auto px-1 py-4">
                 {messages.length === 0 && (
@@ -97,14 +117,24 @@ export default function ChatPanel({ session }) {
                 <span className="text-xs text-slate-400">
                     Tapez une question, puis générez une présentation express ou envoyez-la au chat.
                 </span>
-                <button
-                    type="button"
-                    onClick={launchPresentation}
-                    disabled={presoLoading || !input.trim()}
-                    className="rounded-full bg-amber-500 px-3 py-1.5 text-xs font-medium text-white disabled:opacity-40"
-                >
-                    {presoLoading ? 'Génération…' : '▶ Présentation express'}
-                </button>
+                <div className="flex gap-2">
+                    <button
+                        type="button"
+                        onClick={launchDebate}
+                        disabled={debateLoading || !input.trim()}
+                        className="rounded-full bg-slate-700 px-3 py-1.5 text-xs font-medium text-white disabled:opacity-40"
+                    >
+                        {debateLoading ? 'Lancement…' : '⚖ Débat du board'}
+                    </button>
+                    <button
+                        type="button"
+                        onClick={launchPresentation}
+                        disabled={presoLoading || !input.trim()}
+                        className="rounded-full bg-amber-500 px-3 py-1.5 text-xs font-medium text-white disabled:opacity-40"
+                    >
+                        {presoLoading ? 'Génération…' : '▶ Présentation express'}
+                    </button>
+                </div>
             </div>
 
             <form onSubmit={submit} className="mt-2 flex items-center gap-2">

@@ -53,6 +53,17 @@ export function createPresentation(sessionUuid, question) {
     });
 }
 
+export function startDebate(sessionUuid, question, maxRounds = 2) {
+    return request(`/sessions/${sessionUuid}/debates`, {
+        method: 'POST',
+        body: { question, max_rounds: maxRounds },
+    });
+}
+
+export function getDebate(debateId) {
+    return request(`/debates/${debateId}`);
+}
+
 export function transcribeAudio(sessionUuid, blob) {
     const form = new FormData();
     form.append('audio', blob, 'question.webm');

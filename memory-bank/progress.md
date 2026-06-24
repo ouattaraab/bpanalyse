@@ -62,7 +62,9 @@
       financial_metrics via StructuredDataService) ; chiffres réels injectés en contexte (anti-invention)
 - [x] 4.4 — Arrêt propre : condition N tours (`stop_condition.max_rounds`)
       Tests : 4 (verifier verifie/a_verifier/année ; API débat 4 personas + 150 vérifié / 999 signalé + audit).
-      ⚠ Front débat (affichage des tours) : à construire.
+- [x] Front débat : `DebateView` (répliques par persona, sources, badges chiffres ✓/⚠), bouton
+      « Débat du board » dans le chat, polling jusqu'à completed. Build OK.
+      ✅ **PHASE 3 COMPLÈTE** — débat du board de bout en bout (backend + front).
 
 ### Phase 4 — Voix / gouvernance / session / compte rendu (Epics 2.3, 5, 6)
 - [ ] 6.1 — Consentement écrit avant clonage `[voice_consents]`

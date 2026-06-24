@@ -30,18 +30,20 @@ Tests : 72 backend + 5 front. Build front OK.
 
 Pour une démo complète : `php artisan queue:work` (dérouler l'ingestion) + `npm run dev` + `php artisan serve`.
 
-## Phase 2 (présentation express) COMPLÈTE ✅
-Backend : `SlideSelector` (3-6 slides via Retriever), `NarrationGenerator` (script JSON Groq, durée
-déterministe), `PresentationService`, API `POST /sessions/{uuid}/presentations`. Front :
-`PresentationPlayer` (Reveal.js) + `useNarration` (SpeechSynthesis fr-FR), bouton « Présentation
-express » dans le chat. Voix de narration = navigateur ; voix clonée → Phase 4.
-Tests : 77 backend + 5 front. Builds OK.
+## Phases 2 et 3 COMPLÈTES ✅
+- **Phase 2 (présentation express)** : SlideSelector + NarrationGenerator + PresentationService ;
+  front PresentationPlayer (Reveal.js) + SpeechSynthesis.
+- **Phase 3 (débat du board)** : DebatePersonas (4), DebateOrchestrator (Claude), FinancialVerifier
+  (déterministe), RunDebateJob ; front DebateView (répliques + chiffres ✓/⚠). API
+  `POST /sessions/{uuid}/debates`, `GET /debates/{id}`.
+Tests : **81 backend + 5 front**. Builds OK. Tout poussé sur `main`.
 
-## Prochaine action — Phase 3 (débat du board)
-Orchestrateur tour-par-tour des 4 personas (DG/Investisseur/DAF/Commerciale), chaque réplique
-sourcée, **vérification des chiffres via function calling → Claude** (routage debate/financial_check),
-condition d'arrêt. Tables `debates` + `debate_turns`. Diffusion live via Reverb (option).
-S'appuie sur `FinancialQueryService` (déjà prêt) pour la vérification déterministe des chiffres.
+Les 3 différenciateurs sont en place : chat RAG sourcé, présentation express, débat avec vérif chiffres.
+
+## Prochaine action — Phase 4 (voix clonée + gouvernance + session/compte rendu)
+Epics 6 (consentement/modèle vocal révocable, AVANT toute synthèse clonée), 2.3 (réponse en voix
+clonée), 5 (épinglage, export DOCX/PDF, audit/couverture, purge sessions). C'est ici que la voix
+clonée du dirigeant (ElevenLabs) s'implémente, avec sa gouvernance ARTCI/Loi 2013-450.
 
 Story 1.2 livrée : intégration Docling en **Python via process**.
 - `tools/docling/parse.py` (venv dédié `tools/docling/.venv`, requirements.txt) → JSON structuré.
