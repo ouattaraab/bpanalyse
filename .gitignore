@@ -18,3 +18,8 @@ auth.json
 /.fleet
 /.nova
 /.zed
+
+# Python (parsing Docling)
+/tools/docling/.venv
+__pycache__/
+*.pyc

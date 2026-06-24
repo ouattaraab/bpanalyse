@@ -1,0 +1,6 @@
+# Dépendances Python du parsing Docling (venv dédié : tools/docling/.venv).
+# Installation :
+#   python3 -m venv tools/docling/.venv
+#   tools/docling/.venv/bin/pip install -r tools/docling/requirements.txt
+docling==2.*
+tabulate>=0.9

@@ -21,7 +21,8 @@
 ### Phase 0 — Socle + ingestion (Epic 1)
 - [x] 0a — Scaffolding Laravel 11 + bindings interfaces (managers + providers concrets)
 - [x] 1.1 — Upload BP (PDF/PPTX), isolé tenant `[tenants, documents]` — 6 tests verts
-- [ ] 1.2 — Parsing Docling, tableaux préservés `[document_slides]`
+- [x] 1.2 — Parsing Docling (Python via process), tableaux préservés `[document_slides]` — 6 tests verts
+      ⚠ validation runtime de tools/docling/parse.py contre Docling réel en attente (install venv en cours)
 - [ ] 1.3 — Chunking sémantique (1 tableau = 1 chunk) `[chunks]`
 - [ ] 1.4 — Embeddings FR → pgvector (index cosine)
 - [ ] 1.5 — Extraction tableaux financiers en SQL `[financial_tables, financial_metrics]`
