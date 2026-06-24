@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TranscriptionController;
 use Illuminate\Http\Request;
@@ -19,3 +20,7 @@ Route::get('/documents/{document}', [DocumentController::class, 'show']);
 Route::post('/documents/{document}/sessions', [SessionController::class, 'store']);
 Route::post('/sessions/{session}/chat', [ChatController::class, 'ask']);
 Route::post('/sessions/{session}/transcribe', [TranscriptionController::class, 'store']);
+
+// --- Présentation express (Epic 3) ---
+Route::post('/sessions/{session}/presentations', [PresentationController::class, 'store']);
+Route::get('/presentations/{presentation}', [PresentationController::class, 'show']);

@@ -46,10 +46,12 @@
       Upload déclenche le pipeline (tenant `default` si absent). Vitest : 5 tests verts ; build OK.
 
 ### Phase 2 — Présentation express (Epic 3) · différenciateur
-- [ ] 3.1 — Sélection 3-6 slides
-- [ ] 3.2 — Narration JSON `[{slide_id, narration, duree}]` `[presentations]`
-- [ ] 3.3 — Défilement synchronisé voix (Reveal.js + TTS)
+- [x] 3.1 — Sélection 3-6 slides (`SlideSelector` via Retriever) — tests verts
+- [x] 3.2 — Narration JSON `[{slide_id, narration, duree}]` `[presentations]` — durée déterministe
+      (`NarrationGenerator` Groq, `PresentationService`, API `POST /sessions/{uuid}/presentations`)
+- [ ] 3.3 — Défilement synchronisé voix (front Reveal.js + SpeechSynthesis navigateur)
 - [ ] 3.4 — Narration affichée à l'écrit (P1)
+      Note : voix de narration = SpeechSynthesis navigateur (fr-FR) ; voix clonée (ElevenLabs) → Phase 4.
 
 ### Phase 3 — Débat du board (Epic 4)
 - [ ] 4.1 — Orchestrateur tour-par-tour, 4 personas `[debates, debate_turns]`
