@@ -14,10 +14,14 @@
 Base de données locale : user `aboubakarouattara` (Homebrew), base `bp_explorer` créée, migrations Laravel + pgvector appliquées.
 
 ## Prochaine action
-**Phase 0 — Epic 1, story 1.1** (upload BP) via `/implement-story 1.1` :
-migrations `tenants` + `documents`, `DocumentController@store`, `StoreDocumentRequest`
-(mimes pdf/pptx, isolement tenant), `DocumentIntakeService`, tests Feature.
-Puis enchaîner 1.2 → 1.5 + commande `bp:ingest` dans l'ordre de `implementationPlan.md`.
+**Phase 0 — Epic 1, story 1.2** (parsing Docling) via `/implement-story 1.2` :
+`DoclingParser` (wrapper, derrière une interface `DocumentParser` mockable),
+`ParseDocumentJob` (statut parsing → parsed), migration `document_slides`
+(slide_index, title, section, image_path, raw_markdown). Tests : tableau Markdown préservé.
+
+Story 1.1 livrée : tenants/documents, disque privé `documents` (isolé par tenant),
+upload validé (pdf/pptx, 50 Mo), réponse sans chemin interne. Tests globaux : 13 passés.
+Base de test dédiée : `bp_explorer_testing` (pgsql + pgvector) configurée dans phpunit.xml.
 
 ## Note environnement
 Git non initialisé dans le repo — proposer un `git init` + premier commit avant d'attaquer les stories

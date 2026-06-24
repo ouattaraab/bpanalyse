@@ -38,6 +38,17 @@ return [
             'report' => false,
         ],
 
+        // Stockage isolé des documents téléversés (BP), par tenant et privé.
+        // Jamais exposé publiquement : tout accès passe par le backend.
+        'documents' => [
+            'driver' => 'local',
+            'root' => storage_path('app/documents'),
+            'serve' => false,
+            'visibility' => 'private',
+            'throw' => false,
+            'report' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

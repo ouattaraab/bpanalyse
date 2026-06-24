@@ -11,13 +11,16 @@
 - Étape 2 (scaffolding) **terminée et vérifiée** : Laravel 11.54, PostgreSQL 17 + pgvector 0.8.3,
   Reverb (WebSocket), routing API, Pest. Bindings IA câblés (managers + providers concrets).
   Front React 18 + Vite + Tailwind 3 + Reveal.js + Echo (build OK). Tests : 7 passés.
-- Prochaine action : story 1.1 (upload BP) via `/implement-story 1.1`.
+- Story 1.1 (upload BP) **terminée** : tenants/documents, disque privé `documents` isolé
+  par tenant, DocumentController + StoreDocumentRequest (mimes pdf/pptx, max 50 Mo) +
+  DocumentIntakeService + DocumentResource (sans chemin interne). Base de test pgsql dédiée
+  `bp_explorer_testing`. Prochaine action : story 1.2 (parsing Docling).
 
 ## À faire (par phase — détail dans implementationPlan.md)
 
 ### Phase 0 — Socle + ingestion (Epic 1)
 - [x] 0a — Scaffolding Laravel 11 + bindings interfaces (managers + providers concrets)
-- [ ] 1.1 — Upload BP (PDF/PPTX), isolé tenant `[tenants, documents]`
+- [x] 1.1 — Upload BP (PDF/PPTX), isolé tenant `[tenants, documents]` — 6 tests verts
 - [ ] 1.2 — Parsing Docling, tableaux préservés `[document_slides]`
 - [ ] 1.3 — Chunking sémantique (1 tableau = 1 chunk) `[chunks]`
 - [ ] 1.4 — Embeddings FR → pgvector (index cosine)
