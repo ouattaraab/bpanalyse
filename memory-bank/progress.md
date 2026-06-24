@@ -25,15 +25,17 @@
 - [x] 1.3 — Chunking sémantique (1 tableau = 1 chunk) `[chunks]` — 7 tests verts ;
       validé sur le PRD réel (13 chunks tableau + 19 texte)
 - [x] 1.4 — Embeddings bge-m3 (Python via process, souverain) → pgvector + index HNSW cosine — 6 tests verts
-      (validation runtime du modèle réel bge-m3 en cours : 1er téléchargement ~2,2 Go)
+      ✓ modèle réel bge-m3 validé : 2 textes → vecteurs dim 1024 (valeurs réelles)
 - [x] 1.5 — Extraction tableaux financiers en SQL `[financial_tables, financial_metrics]` — 18 tests verts ;
       validé sur le PRD réel (13 tableaux → 84 mesures, 100% déterministe, aucun LLM)
 - [x] 0-x — Commande `bp:ingest` + `IngestionPipeline` (chaîne parse→chunk→embed→financials) — 3 tests verts
       ✅ **PHASE 0 / EPIC 1 COMPLÈTE** — pipeline d'ingestion de bout en bout (uploaded → indexed)
 
 ### Phase 1 — Chat RAG + outil de calcul (Epics 2.1-2.2, 1.5)
-- [ ] Socle session/audit/retriever `[explorer_sessions, interactions, audit_logs]`
-- [ ] 1.5b — `FinancialQueryService` (StructuredDataService, requêtes whitelistées)
+- [x] Socle session/audit/retriever `[explorer_sessions, interactions, audit_logs]` — 10 tests verts
+      (SessionService, AuditLogger, Retriever cosine pgvector, SourceFormatter)
+- [x] 1.5b — `FinancialQueryService` (StructuredDataService : list_metrics/get_metric/compare_periods,
+      croissance déterministe, capabilities) — couvert par les 10 tests socle
 - [ ] 2.1 — Question écrite → réponse sourcée (RAG, chiffres déterministes)
 - [ ] 2.2 — Question orale (STT Deepgram, transcription affichée)
 

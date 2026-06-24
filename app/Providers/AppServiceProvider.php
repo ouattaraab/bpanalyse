@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Document\Contracts\StructuredDataService;
+use App\Services\Document\FinancialQueryService;
 use App\Services\Ingestion\Contracts\DocumentParser;
 use App\Services\Ingestion\DoclingParser;
 use Illuminate\Contracts\Foundation\Application;
@@ -23,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
                 timeout: (int) $config['timeout'],
             );
         });
+
+        // Accès déterministe aux chiffres (BP). Le LLM ne calcule jamais.
+        $this->app->bind(StructuredDataService::class, FinancialQueryService::class);
     }
 
     /**
