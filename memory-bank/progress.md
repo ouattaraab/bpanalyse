@@ -38,7 +38,10 @@
       croissance déterministe, capabilities) — couvert par les 10 tests socle
 - [x] 2.1 — Question écrite → réponse sourcée (RAG, chiffres déterministes) — 3 tests verts
       (RagService, ChatController + SessionController, AnswerResource ; prompt anti-calcul, audit)
-- [ ] 2.2 — Question orale (STT Deepgram, transcription affichée)
+- [x] 2.2 — Question orale (STT Deepgram, transcription) — 5 tests verts
+      (DeepgramSttClient HTTP réel + fakeable, TranscriptionController, validation audio)
+      ✅ **PHASE 1 (backend) COMPLÈTE** — chat RAG sourcé + STT + outil de calcul déterministe
+      ⚠ UI React des features (chat, etc.) non encore construite — backend API prêt et testé
 
 ### Phase 2 — Présentation express (Epic 3) · différenciateur
 - [ ] 3.1 — Sélection 3-6 slides

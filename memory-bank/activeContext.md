@@ -13,25 +13,22 @@
 
 Base de données locale : user `aboubakarouattara` (Homebrew), base `bp_explorer` créée, migrations Laravel + pgvector appliquées.
 
-## État : PHASE 0 (Epic 1 — ingestion) COMPLÈTE ✅
-Pipeline de bout en bout opérationnel et testé : `bp:ingest` → intake → parse (Docling) →
-chunk (1 tableau = 1 chunk) → embeddings bge-m3 (pgvector) → extraction financière déterministe.
-Tests globaux : **53 passés**. Tout poussé sur `main`.
+## État : PHASES 0 et 1 (backend) COMPLÈTES ✅
+- **Phase 0 (ingestion)** : `bp:ingest` → parse (Docling) → chunk → embeddings bge-m3 (pgvector,
+  modèle réel validé) → extraction financière déterministe.
+- **Phase 1 (chat RAG + outil de calcul)** : socle session/audit/retriever, `FinancialQueryService`
+  (StructuredDataService déterministe), chat RAG sourcé (2.1), STT Deepgram (2.2).
+- API REST : `POST /documents`, `/documents/{id}/sessions`, `/sessions/{uuid}/chat`, `/sessions/{uuid}/transcribe`.
+- Tests globaux : **71 passés**. Tout poussé sur `main`.
 
-## Prochaine action
-**Phase 1 — Chat RAG sourcé + outil de calcul** (Epics 2.1-2.2 + 1.5b) :
-1. Socle session/audit/retriever : migrations `explorer_sessions`, `interactions`, `audit_logs` ;
-   `SessionService`, `AuditLogger`, `Retriever` (recherche cosine pgvector + filtre métadonnées).
-2. `FinancialQueryService` (implémente `StructuredDataService`) : requêtes whitelistées
-   déterministes sur `financial_metrics` + `capabilities()` (outils pour function calling).
-3. Story 2.1 : `RagService` (retrieve → prompt FR « ne calcule pas » → LlmManager::for('chat')
-   → réponse + citations), `ChatController`, audit. Chiffres via FinancialQueryService.
-4. Story 2.2 : STT Deepgram (`DeepgramSttClient::transcribe`), `TranscriptionController`.
+## Prochaine action — au choix
+**Option A — Phase 2 (présentation express, le différenciateur)** : `SlideSelector` (3-6 slides),
+`NarrationGenerator` (script JSON `[{slide_id, narration, duree}]`, routage `presentation`→Groq),
+`PresentationService` + jobs, table `presentations`, TTS par slide, front Reveal.js synchronisé.
+**Option B — Front React des features Phase 1** (chat vocal) : `resources/js/features/chat` brancher
+sur l'API existante (la coquille React actuelle est encore la page d'accueil placeholder).
 
-Story 1.5 livrée : extraction financière déterministe (FinancialValueParser FR/EN, extracteur,
-ExtractFinancialsJob, financial_tables/financial_metrics). Validé sur le PRD : 13 tableaux → 84 mesures.
-
-Note 1.4 : validation runtime du modèle réel bge-m3 (download ~2,2 Go) lancée en arrière-plan.
+Backend prêt et testé pour les deux. Recommandation : Phase 2 (cœur de valeur) puis revenir au front.
 
 Story 1.2 livrée : intégration Docling en **Python via process**.
 - `tools/docling/parse.py` (venv dédié `tools/docling/.venv`, requirements.txt) → JSON structuré.
