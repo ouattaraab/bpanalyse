@@ -1,0 +1,212 @@
+<svg viewBox="0 0 1280 1000" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#048FF6"/>
+    </marker>
+    <marker id="arrowDark" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#141E53"/>
+    </marker>
+    <style>
+      .title { font-size: 26px; font-weight: 700; fill: #141E53; }
+      .subtitle { font-size: 13px; fill: #5a6275; }
+      .zone { fill: #f4f7fb; stroke: #d7e0ee; stroke-width: 1.5; rx: 12; }
+      .zonelabel { font-size: 13px; font-weight: 700; fill: #048FF6; letter-spacing: 1px; }
+      .box { rx: 9; }
+      .boxtitle { font-size: 13.5px; font-weight: 700; fill: #ffffff; }
+      .boxtext { font-size: 11px; fill: #eaf3ff; }
+      .darktext { font-size: 11px; fill: #3a4458; }
+      .navy { fill: #141E53; }
+      .sky { fill: #048FF6; }
+      .teal { fill: #1f9d8f; }
+      .amber { fill: #d98019; }
+      .grey { fill: #6b7280; }
+      .lbl { font-size: 10.5px; fill: #141E53; font-weight: 600; }
+      .note { font-size: 10px; fill: #6b7280; font-style: italic; }
+    </style>
+  </defs>
+
+  <!-- Header -->
+  <text x="40" y="48" class="title">BP Explorer / DocExplorer — Architecture (explication de documents complexes)</text>
+  <text x="40" y="70" class="subtitle">DocumentProfile multi-types · LLM hybride Groq + Claude · Présentation express · Débat multi-agents · Compte rendu one-shot</text>
+
+  <!-- ZONE 1: Front -->
+  <rect x="40" y="95" width="1200" height="120" class="zone"/>
+  <text x="58" y="118" class="zonelabel">CLIENT (React / Flutter Web)</text>
+
+  <rect x="60" y="130" width="200" height="68" class="box sky"/>
+  <text x="72" y="152" class="boxtitle">Chat vocal</text>
+  <text x="72" y="170" class="boxtext">Question orale / écrite</text>
+  <text x="72" y="185" class="boxtext">Réponse voix clonée + texte</text>
+
+  <rect x="280" y="130" width="220" height="68" class="box sky"/>
+  <text x="292" y="152" class="boxtitle">Présentation express</text>
+  <text x="292" y="170" class="boxtext">Slides auto-défilantes</text>
+  <text x="292" y="185" class="boxtext">Narration synchronisée (Reveal.js)</text>
+
+  <rect x="520" y="130" width="200" height="68" class="box sky"/>
+  <text x="532" y="152" class="boxtitle">Débat du board</text>
+  <text x="532" y="170" class="boxtext">4 personas tour par tour</text>
+  <text x="532" y="185" class="boxtext">Répliques sourcées</text>
+
+  <rect x="740" y="130" width="200" height="68" class="box sky"/>
+  <text x="752" y="152" class="boxtitle">Épinglage session</text>
+  <text x="752" y="170" class="boxtext">Marquer réponses clés</text>
+  <text x="752" y="185" class="boxtext">État local (Riverpod/React)</text>
+
+  <rect x="960" y="130" width="260" height="68" class="box sky"/>
+  <text x="972" y="152" class="boxtitle">Export compte rendu IA</text>
+  <text x="972" y="170" class="boxtext">DOCX / PDF téléchargeable</text>
+  <text x="972" y="185" class="boxtext">Logique one-shot (sortie)</text>
+
+  <!-- arrow to backend -->
+  <line x1="640" y1="215" x2="640" y2="250" stroke="#141E53" stroke-width="2" marker-end="url(#arrowDark)"/>
+  <text x="650" y="238" class="lbl">HTTPS / WebSocket</text>
+
+  <!-- ZONE 2: Backend Laravel -->
+  <rect x="40" y="255" width="1200" height="180" class="zone"/>
+  <text x="58" y="278" class="zonelabel">BACKEND — Laravel 11 (API + orchestration)</text>
+
+  <rect x="60" y="292" width="200" height="64" class="box navy"/>
+  <text x="72" y="310" class="boxtitle">API Gateway + DocumentProfile</text>
+  <text x="72" y="328" class="boxtext">Auth · profil de doc actif</text>
+  <text x="72" y="343" class="boxtext">Rate limit · audit log</text>
+
+  <rect x="280" y="292" width="220" height="64" class="box navy"/>
+  <text x="292" y="314" class="boxtitle">Orchestrateur RAG</text>
+  <text x="292" y="332" class="boxtext">Recherche vectorielle + reranking</text>
+  <text x="292" y="347" class="boxtext">Routage question → feature</text>
+
+  <rect x="520" y="292" width="200" height="64" class="box navy"/>
+  <text x="532" y="314" class="boxtitle">Moteur présentation</text>
+  <text x="532" y="332" class="boxtext">Sélection slides</text>
+  <text x="532" y="347" class="boxtext">Script narré (JSON)</text>
+
+  <rect x="740" y="292" width="200" height="64" class="box navy"/>
+  <text x="752" y="314" class="boxtitle">Orchestrateur agents</text>
+  <text x="752" y="332" class="boxtext">Boucle tour-par-tour</text>
+  <text x="752" y="347" class="boxtext">4 personas + arbitre</text>
+
+  <rect x="960" y="292" width="260" height="64" class="box navy"/>
+  <text x="972" y="310" class="boxtitle">Données structurées (déterministe)</text>
+  <text x="972" y="328" class="boxtext">Calcul financier · clauses · exigences</text>
+  <text x="972" y="343" class="boxtext">Anti-hallucination · extracteurs par type</text>
+
+  <rect x="280" y="368" width="660" height="50" class="box navy"/>
+  <text x="292" y="390" class="boxtitle">File de jobs (database queue / Redis) — STT, génération, TTS asynchrones</text>
+  <text x="292" y="408" class="boxtext">Découple les appels lents et permet le streaming progressif vers le front</text>
+
+  <!-- arrows backend to services -->
+  <line x1="360" y1="435" x2="360" y2="475" stroke="#048FF6" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="900" y1="435" x2="900" y2="475" stroke="#048FF6" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ZONE 3: AI services -->
+  <rect x="40" y="480" width="600" height="230" class="zone"/>
+  <text x="58" y="503" class="zonelabel">SERVICES IA</text>
+
+  <rect x="60" y="516" width="170" height="58" class="box teal"/>
+  <text x="72" y="536" class="boxtitle">LLM (routage hybride)</text>
+  <text x="72" y="552" class="boxtext">Groq: chat / prés. / narration</text>
+  <text x="72" y="565" class="boxtext">Claude: débat / calcul critique</text>
+
+  <rect x="245" y="516" width="170" height="58" class="box teal"/>
+  <text x="257" y="538" class="boxtitle">STT</text>
+  <text x="257" y="555" class="boxtext">Deepgram Nova</text>
+  <text x="257" y="568" class="boxtext">ou faster-whisper</text>
+
+  <rect x="430" y="516" width="190" height="58" class="box teal"/>
+  <text x="442" y="538" class="boxtitle">TTS voix clonée</text>
+  <text x="442" y="555" class="boxtext">ElevenLabs</text>
+  <text x="442" y="568" class="boxtext">ou XTTS/F5-TTS souverain</text>
+
+  <rect x="60" y="586" width="170" height="58" class="box teal"/>
+  <text x="72" y="608" class="boxtitle">Embeddings</text>
+  <text x="72" y="625" class="boxtext">bge-m3 / e5-large</text>
+  <text x="72" y="638" class="boxtext">(multilingue FR)</text>
+
+  <rect x="245" y="586" width="170" height="58" class="box teal"/>
+  <text x="257" y="608" class="boxtitle">Parsing BP</text>
+  <text x="257" y="625" class="boxtext">Docling</text>
+  <text x="257" y="638" class="boxtext">tableaux préservés</text>
+
+  <rect x="430" y="586" width="190" height="58" class="box teal"/>
+  <text x="442" y="608" class="boxtitle">Realtime (option)</text>
+  <text x="442" y="625" class="boxtext">LiveKit / Pipecat</text>
+  <text x="442" y="638" class="boxtext">conversation fluide</text>
+
+  <text x="60" y="685" class="note">Routage LLM par feature (config) : Groq pour le volume et la latence, Claude pour le raisonnement critique. Clé API jamais exposée au front.</text>
+  <text x="60" y="700" class="note">Mode souverain : colonne droite du tableau (auto-hébergé). Le profil de document (DocumentProfile) paramètre personas, extracteurs et rendu.</text>
+
+  <!-- ZONE 4: Data -->
+  <rect x="660" y="480" width="580" height="230" class="zone"/>
+  <text x="678" y="503" class="zonelabel">DONNÉES</text>
+
+  <rect x="680" y="516" width="180" height="58" class="box amber"/>
+  <text x="692" y="538" class="boxtitle">PostgreSQL + pgvector</text>
+  <text x="692" y="555" class="boxtext">Chunks + embeddings</text>
+  <text x="692" y="568" class="boxtext">Métadonnées slides</text>
+
+  <rect x="875" y="516" width="170" height="58" class="box amber"/>
+  <text x="887" y="538" class="boxtitle">Tableaux financiers</text>
+  <text x="887" y="555" class="boxtext">SQL structuré</text>
+  <text x="887" y="568" class="boxtext">pour le calcul</text>
+
+  <rect x="1060" y="516" width="160" height="58" class="box amber"/>
+  <text x="1072" y="538" class="boxtitle">Slides (images)</text>
+  <text x="1072" y="555" class="boxtext">1 image / slide</text>
+  <text x="1072" y="568" class="boxtext">+ embedding visuel</text>
+
+  <rect x="680" y="586" width="180" height="58" class="box amber"/>
+  <text x="692" y="608" class="boxtitle">Sessions</text>
+  <text x="692" y="625" class="boxtext">Réponses épinglées</text>
+  <text x="692" y="638" class="boxtext">Éphémère (one-shot)</text>
+
+  <rect x="875" y="586" width="170" height="58" class="box amber"/>
+  <text x="887" y="608" class="boxtitle">Modèle vocal</text>
+  <text x="887" y="625" class="boxtext">Isolé · révocable</text>
+  <text x="887" y="638" class="boxtext">Consentement lié</text>
+
+  <rect x="1060" y="586" width="160" height="58" class="box amber"/>
+  <text x="1072" y="608" class="boxtitle">Audit log</text>
+  <text x="1072" y="625" class="boxtext">Traçabilité réponses</text>
+  <text x="1072" y="638" class="boxtext">ARTCI / 2013-450</text>
+
+  <!-- ZONE 5: ingestion pipeline -->
+  <rect x="40" y="745" width="1200" height="150" class="zone"/>
+  <text x="58" y="768" class="zonelabel">PIPELINE D'INGESTION (hors ligne, à l'upload du BP)</text>
+
+  <rect x="60" y="788" width="190" height="80" class="box grey"/>
+  <text x="72" y="812" class="boxtitle">1. Upload BP</text>
+  <text x="72" y="832" class="boxtext">PDF / PPTX 150 p.</text>
+  <text x="72" y="848" class="boxtext">+ consentement voix</text>
+
+  <line x1="250" y1="828" x2="290" y2="828" stroke="#141E53" stroke-width="2" marker-end="url(#arrowDark)"/>
+
+  <rect x="295" y="788" width="190" height="80" class="box grey"/>
+  <text x="307" y="812" class="boxtitle">2. Parsing Docling</text>
+  <text x="307" y="832" class="boxtext">Markdown structuré</text>
+  <text x="307" y="848" class="boxtext">tableaux entiers</text>
+
+  <line x1="485" y1="828" x2="525" y2="828" stroke="#141E53" stroke-width="2" marker-end="url(#arrowDark)"/>
+
+  <rect x="530" y="788" width="190" height="80" class="box grey"/>
+  <text x="542" y="812" class="boxtitle">3. Chunking sémantique</text>
+  <text x="542" y="832" class="boxtext">1 tableau = 1 chunk</text>
+  <text x="542" y="848" class="boxtext">+ métadonnées slide</text>
+
+  <line x1="720" y1="828" x2="760" y2="828" stroke="#141E53" stroke-width="2" marker-end="url(#arrowDark)"/>
+
+  <rect x="765" y="788" width="190" height="80" class="box grey"/>
+  <text x="777" y="812" class="boxtitle">4. Embeddings</text>
+  <text x="777" y="832" class="boxtext">texte + slides</text>
+  <text x="777" y="848" class="boxtext">→ pgvector</text>
+
+  <line x1="955" y1="828" x2="995" y2="828" stroke="#141E53" stroke-width="2" marker-end="url(#arrowDark)"/>
+
+  <rect x="1000" y="788" width="220" height="80" class="box grey"/>
+  <text x="1012" y="812" class="boxtitle">5. Extraction financière</text>
+  <text x="1012" y="832" class="boxtext">tableaux → SQL</text>
+  <text x="1012" y="848" class="boxtext">clonage voix (consenti)</text>
+
+  <text x="40" y="930" class="note">Couleurs : bleu ciel = front · navy = backend Laravel · vert = services IA · ambre = données · gris = ingestion.   Identité : navy #141E53 / sky #048FF6.</text>
+  <text x="40" y="948" class="note">Vigilance : consentement écrit pour le clonage vocal (données biométriques, Loi 2013-450/ARTCI) · calcul financier déterministe, jamais laissé au LLM.</text>
+</svg>
