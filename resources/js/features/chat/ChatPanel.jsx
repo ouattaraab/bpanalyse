@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useChat } from './useChat';
 import { useAudioRecorder } from './useAudioRecorder';
 import SourceList from './SourceList';
+import PresentationPlayer from '../presentation/PresentationPlayer';
+import { createPresentation } from '../../lib/api';
 
 /** Chat vocal RAG : question écrite ou orale, réponse sourcée. */
 export default function ChatPanel({ session }) {
@@ -9,6 +11,24 @@ export default function ChatPanel({ session }) {
     const recorder = useAudioRecorder();
     const [input, setInput] = useState('');
     const [transcribing, setTranscribing] = useState(false);
+    const [presentation, setPresentation] = useState(null);
+    const [presoLoading, setPresoLoading] = useState(false);
+    const [presoError, setPresoError] = useState(null);
+
+    const launchPresentation = async () => {
+        const question = input.trim();
+        if (!question || presoLoading) return;
+        setPresoError(null);
+        setPresoLoading(true);
+        try {
+            const result = await createPresentation(session.uuid, question);
+            setPresentation(result);
+        } catch (e) {
+            setPresoError(e.message || "La présentation n'a pas pu être générée.");
+        } finally {
+            setPresoLoading(false);
+        }
+    };
 
     const submit = async (event) => {
         event.preventDefault();
@@ -37,6 +57,10 @@ export default function ChatPanel({ session }) {
 
     return (
         <div className="flex h-full flex-col">
+            {presentation && (
+                <PresentationPlayer presentation={presentation} onClose={() => setPresentation(null)} />
+            )}
+
             <div className="flex-1 space-y-4 overflow-y-auto px-1 py-4">
                 {messages.length === 0 && (
                     <p className="text-center text-sm text-slate-400">
@@ -65,11 +89,25 @@ export default function ChatPanel({ session }) {
                 {pending && <p className="text-sm text-slate-400">L'assistant réfléchit…</p>}
             </div>
 
-            {(error || recorder.error) && (
-                <p className="px-1 pb-2 text-sm text-red-600">{error || recorder.error}</p>
+            {(error || recorder.error || presoError) && (
+                <p className="px-1 pb-2 text-sm text-red-600">{error || recorder.error || presoError}</p>
             )}
 
-            <form onSubmit={submit} className="flex items-center gap-2 border-t border-slate-200 pt-3">
+            <div className="flex items-center justify-between border-t border-slate-200 pt-2">
+                <span className="text-xs text-slate-400">
+                    Tapez une question, puis générez une présentation express ou envoyez-la au chat.
+                </span>
+                <button
+                    type="button"
+                    onClick={launchPresentation}
+                    disabled={presoLoading || !input.trim()}
+                    className="rounded-full bg-amber-500 px-3 py-1.5 text-xs font-medium text-white disabled:opacity-40"
+                >
+                    {presoLoading ? 'Génération…' : '▶ Présentation express'}
+                </button>
+            </div>
+
+            <form onSubmit={submit} className="mt-2 flex items-center gap-2">
                 <button
                     type="button"
                     onClick={toggleMic}

@@ -30,11 +30,18 @@ Tests : 72 backend + 5 front. Build front OK.
 
 Pour une démo complète : `php artisan queue:work` (dérouler l'ingestion) + `npm run dev` + `php artisan serve`.
 
-## Prochaine action — au choix
-**Phase 2 (présentation express, différenciateur)** : `SlideSelector` (3-6 slides), `NarrationGenerator`
-(JSON `[{slide_id, narration, duree}]`, routage `presentation`→Groq), `PresentationService` + jobs,
-table `presentations`, TTS par slide, front Reveal.js synchronisé.
-**Ou Phase 3 (débat du board)** : orchestrateur 4 personas + vérification chiffres (function calling → Claude).
+## Phase 2 (présentation express) COMPLÈTE ✅
+Backend : `SlideSelector` (3-6 slides via Retriever), `NarrationGenerator` (script JSON Groq, durée
+déterministe), `PresentationService`, API `POST /sessions/{uuid}/presentations`. Front :
+`PresentationPlayer` (Reveal.js) + `useNarration` (SpeechSynthesis fr-FR), bouton « Présentation
+express » dans le chat. Voix de narration = navigateur ; voix clonée → Phase 4.
+Tests : 77 backend + 5 front. Builds OK.
+
+## Prochaine action — Phase 3 (débat du board)
+Orchestrateur tour-par-tour des 4 personas (DG/Investisseur/DAF/Commerciale), chaque réplique
+sourcée, **vérification des chiffres via function calling → Claude** (routage debate/financial_check),
+condition d'arrêt. Tables `debates` + `debate_turns`. Diffusion live via Reverb (option).
+S'appuie sur `FinancialQueryService` (déjà prêt) pour la vérification déterministe des chiffres.
 
 Story 1.2 livrée : intégration Docling en **Python via process**.
 - `tools/docling/parse.py` (venv dédié `tools/docling/.venv`, requirements.txt) → JSON structuré.

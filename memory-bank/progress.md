@@ -49,9 +49,11 @@
 - [x] 3.1 — Sélection 3-6 slides (`SlideSelector` via Retriever) — tests verts
 - [x] 3.2 — Narration JSON `[{slide_id, narration, duree}]` `[presentations]` — durée déterministe
       (`NarrationGenerator` Groq, `PresentationService`, API `POST /sessions/{uuid}/presentations`)
-- [ ] 3.3 — Défilement synchronisé voix (front Reveal.js + SpeechSynthesis navigateur)
-- [ ] 3.4 — Narration affichée à l'écrit (P1)
+- [x] 3.3 — Défilement synchronisé voix : front `PresentationPlayer` (Reveal.js) + `useNarration`
+      (SpeechSynthesis fr-FR) ; la slide avance à la fin de la narration. Build OK.
+- [x] 3.4 — Narration affichée à l'écrit (sous la slide courante)
       Note : voix de narration = SpeechSynthesis navigateur (fr-FR) ; voix clonée (ElevenLabs) → Phase 4.
+      ✅ **PHASE 2 COMPLÈTE** — présentation express de bout en bout (backend + front).
 
 ### Phase 3 — Débat du board (Epic 4)
 - [ ] 4.1 — Orchestrateur tour-par-tour, 4 personas `[debates, debate_turns]`

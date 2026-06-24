@@ -46,6 +46,13 @@ export function askQuestion(sessionUuid, question) {
     });
 }
 
+export function createPresentation(sessionUuid, question) {
+    return request(`/sessions/${sessionUuid}/presentations`, {
+        method: 'POST',
+        body: { question },
+    });
+}
+
 export function transcribeAudio(sessionUuid, blob) {
     const form = new FormData();
     form.append('audio', blob, 'question.webm');
