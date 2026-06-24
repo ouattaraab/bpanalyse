@@ -17,7 +17,7 @@ use InvalidArgumentException;
  * En mode souverain (AI_SOVEREIGN=true), toutes les features basculent sur 'vllm'.
  * Le débat du board et la vérification des chiffres vont sur Claude (fiabilité).
  */
-final class LlmManager
+class LlmManager
 {
     /** @param array<string, mixed> $config  contenu de config('ai') */
     public function __construct(private readonly array $config)

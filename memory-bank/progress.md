@@ -36,7 +36,8 @@
       (SessionService, AuditLogger, Retriever cosine pgvector, SourceFormatter)
 - [x] 1.5b — `FinancialQueryService` (StructuredDataService : list_metrics/get_metric/compare_periods,
       croissance déterministe, capabilities) — couvert par les 10 tests socle
-- [ ] 2.1 — Question écrite → réponse sourcée (RAG, chiffres déterministes)
+- [x] 2.1 — Question écrite → réponse sourcée (RAG, chiffres déterministes) — 3 tests verts
+      (RagService, ChatController + SessionController, AnswerResource ; prompt anti-calcul, audit)
 - [ ] 2.2 — Question orale (STT Deepgram, transcription affichée)
 
 ### Phase 2 — Présentation express (Epic 3) · différenciateur
