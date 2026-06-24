@@ -63,10 +63,18 @@ return [
         'require_consent_for_cloning' => true,
     ],
 
+    // Embeddings souverains (locaux) : bge-m3 via un process Python dédié.
     'embeddings' => [
         'default' => env('EMBEDDING_PROVIDER', 'bge_m3'),
         'providers' => [
-            'bge_m3' => ['base_url' => env('EMBEDDING_BASE_URL', 'http://localhost:8080'), 'dimensions' => 1024],
+            'bge_m3' => [
+                'driver'     => 'process',
+                'python'     => env('EMBEDDING_PYTHON', base_path('tools/embeddings/.venv/bin/python')),
+                'script'     => env('EMBEDDING_SCRIPT', base_path('tools/embeddings/embed.py')),
+                'model'      => env('EMBEDDING_MODEL', 'BAAI/bge-m3'),
+                'dimensions' => 1024,
+                'timeout'    => (int) env('EMBEDDING_TIMEOUT', 600),
+            ],
         ],
     ],
 

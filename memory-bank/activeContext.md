@@ -14,17 +14,21 @@
 Base de données locale : user `aboubakarouattara` (Homebrew), base `bp_explorer` créée, migrations Laravel + pgvector appliquées.
 
 ## Prochaine action
-**Phase 0 — Epic 1, story 1.4** (embeddings + indexation pgvector) via `/implement-story 1.4` :
-implémenter `BgeM3EmbeddingClient::embed()` (HTTP vers service bge-m3, dim 1024),
-`EmbedChunksJob` (peuple `chunks.embedding` par batch), index vectoriel HNSW/cosine sur
-`chunks.embedding`, statut document → `indexed`. Embedding image/slide : optionnel (à décider).
-Tests : embeddings écrits, dim conforme, client mocké. Décider du service bge-m3 local
-(ex. conteneur d'inférence) ou fallback ; sinon stub jusqu'à disponibilité.
+**Phase 0 — Epic 1, story 1.5** (extraction des tableaux financiers en SQL — cœur anti-hallucination)
+via `/implement-story 1.5` : `FinancialTableExtractor` (déterministe, parse les chunks `table`
+en lignes `financial_metrics` : label, période, valeur, unité, source_ref ; AUCUN LLM),
+`ExtractFinancialsJob`, migrations `financial_tables` + `financial_metrics`, modèles.
+Test clé : tableau markdown → lignes attendues (valeurs exactes) + assert qu'aucun LlmClient
+n'est sollicité. Puis story 0-x : commande `bp:ingest` qui chaîne tout le pipeline.
 
-Story 1.3 livrée : `SemanticChunker` (1 tableau = 1 chunk avec légende ; texte par section,
-section via titres Markdown), `ChunkDocumentJob` (idempotent), migration + modèle `chunks`
-(colonne `embedding vector(1024)` ajoutée via ALTER guardé pgsql, hors $fillable).
-Validé sur le PRD réel : 13 chunks tableau + 19 texte. Tests globaux : 26 passés.
+Story 1.4 livrée : embeddings bge-m3 **souverains (Python via process)** — choix utilisateur.
+- `tools/embeddings/embed.py` (venv `tools/embeddings/.venv`, sentence-transformers) ; entrée
+  JSON stdin {texts}, sortie {vectors}. `BgeM3EmbeddingClient` réécrit en process (plus de HTTP),
+  config `ai.embeddings.bge_m3` en driver `process`. `EmbedChunksJob` (lots, écrit `chunks.embedding`
+  via `?::vector`, statut → indexed/failed). Migration index HNSW cosine.
+- Tests : 6 (process via stub, dim 1024, dim non conforme rejetée, échec process ; job → pgvector
+  réel `vector_dims`=1024, indexed). Modèle réel bge-m3 : validation runtime en cours (download ~2,2 Go).
+Tests globaux : 32 passés.
 
 Story 1.2 livrée : intégration Docling en **Python via process**.
 - `tools/docling/parse.py` (venv dédié `tools/docling/.venv`, requirements.txt) → JSON structuré.

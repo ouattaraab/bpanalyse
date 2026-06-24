@@ -31,8 +31,11 @@ final class EmbeddingManager
 
         return match ($providerKey) {
             'bge_m3' => new BgeM3EmbeddingClient(
-                baseUrl: (string) ($cfg['base_url'] ?? ''),
+                python: (string) ($cfg['python'] ?? 'python3'),
+                script: (string) ($cfg['script'] ?? ''),
+                model: (string) ($cfg['model'] ?? 'BAAI/bge-m3'),
                 dimensions: (int) ($cfg['dimensions'] ?? 1024),
+                timeout: (int) ($cfg['timeout'] ?? 600),
             ),
             default => throw new InvalidArgumentException("Provider embeddings non supporté : {$providerKey}"),
         };

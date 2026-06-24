@@ -25,7 +25,8 @@
       ✓ validé runtime : Docling 2.x installé (venv), parse.py + chaîne PHP→Python OK sur un vrai doc (tableaux préservés)
 - [x] 1.3 — Chunking sémantique (1 tableau = 1 chunk) `[chunks]` — 7 tests verts ;
       validé sur le PRD réel (13 chunks tableau + 19 texte)
-- [ ] 1.4 — Embeddings FR → pgvector (index cosine)
+- [x] 1.4 — Embeddings bge-m3 (Python via process, souverain) → pgvector + index HNSW cosine — 6 tests verts
+      (validation runtime du modèle réel bge-m3 en cours : 1er téléchargement ~2,2 Go)
 - [ ] 1.5 — Extraction tableaux financiers en SQL `[financial_tables, financial_metrics]`
 - [ ] 0-x — Commande `bp:ingest` (orchestration pipeline)
 

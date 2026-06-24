@@ -1,0 +1,7 @@
+# Dépendances Python des embeddings bge-m3 (venv dédié : tools/embeddings/.venv).
+# Installation :
+#   python3 -m venv tools/embeddings/.venv
+#   tools/embeddings/.venv/bin/pip install -r tools/embeddings/requirements.txt
+#
+# Le modèle BAAI/bge-m3 (~2 Go) est téléchargé au premier encodage.
+sentence-transformers>=3.0

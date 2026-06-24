@@ -19,7 +19,7 @@ auth.json
 /.nova
 /.zed
 
-# Python (parsing Docling)
-/tools/docling/.venv
+# Python (parsing Docling, embeddings bge-m3, ...)
+/tools/*/.venv
 __pycache__/
 *.pyc
