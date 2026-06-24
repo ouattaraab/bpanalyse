@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DebateController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\SessionController;
@@ -24,3 +25,7 @@ Route::post('/sessions/{session}/transcribe', [TranscriptionController::class, '
 // --- Présentation express (Epic 3) ---
 Route::post('/sessions/{session}/presentations', [PresentationController::class, 'store']);
 Route::get('/presentations/{presentation}', [PresentationController::class, 'show']);
+
+// --- Débat du board (Epic 4) ---
+Route::post('/sessions/{session}/debates', [DebateController::class, 'start']);
+Route::get('/debates/{debate}', [DebateController::class, 'show']);

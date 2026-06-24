@@ -56,10 +56,13 @@
       ✅ **PHASE 2 COMPLÈTE** — présentation express de bout en bout (backend + front).
 
 ### Phase 3 — Débat du board (Epic 4)
-- [ ] 4.1 — Orchestrateur tour-par-tour, 4 personas `[debates, debate_turns]`
-- [ ] 4.2 — Chaque agent cite ses sources
-- [ ] 4.3 — Vérification des chiffres (function calling → FinancialQueryService)
-- [ ] 4.4 — Arrêt propre du débat (P1)
+- [x] 4.1 — Orchestrateur tour-par-tour, 4 personas `[debates, debate_turns]` — DebatePersonas + DebateOrchestrator + RunDebateJob
+- [x] 4.2 — Chaque agent cite ses sources (Retriever → sources par réplique)
+- [x] 4.3 — Vérification des chiffres : `FinancialVerifier` **déterministe** (chiffres confrontés à
+      financial_metrics via StructuredDataService) ; chiffres réels injectés en contexte (anti-invention)
+- [x] 4.4 — Arrêt propre : condition N tours (`stop_condition.max_rounds`)
+      Tests : 4 (verifier verifie/a_verifier/année ; API débat 4 personas + 150 vérifié / 999 signalé + audit).
+      ⚠ Front débat (affichage des tours) : à construire.
 
 ### Phase 4 — Voix / gouvernance / session / compte rendu (Epics 2.3, 5, 6)
 - [ ] 6.1 — Consentement écrit avant clonage `[voice_consents]`
