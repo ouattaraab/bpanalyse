@@ -36,9 +36,10 @@ class PinController extends Controller
         ]);
 
         $interaction = Interaction::where('explorer_session_id', $session->id)
-            ->findOrFail($validated['interaction_id']);
+            ->findOrFail((int) $validated['interaction_id']);
 
-        $item = $pins->pin($session, $interaction, $validated['note'] ?? null);
+        $note = $validated['note'] ?? null;
+        $item = $pins->pin($session, $interaction, $note !== null ? (string) $note : null);
 
         return response()->json(['data' => ['id' => $item->id]], HttpResponse::HTTP_CREATED);
     }

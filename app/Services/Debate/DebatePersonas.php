@@ -43,7 +43,11 @@ final class DebatePersonas
         ];
     }
 
-    /** Persona pour un index de tour (cycle DG → Investisseur → DAF → Commerciale). */
+    /**
+     * Persona pour un index de tour (cycle DG → Investisseur → DAF → Commerciale).
+     *
+     * @return array{key: string, name: string, posture: string, prompt: string}
+     */
     public function forTurn(int $turnIndex): array
     {
         $personas = $this->all();

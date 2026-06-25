@@ -30,14 +30,22 @@ final class AiServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton(LlmManager::class, fn (Application $app) => new LlmManager($app['config']->get('ai')));
-        $this->app->singleton(SttManager::class, fn (Application $app) => new SttManager($app['config']->get('ai')));
-        $this->app->singleton(TtsManager::class, fn (Application $app) => new TtsManager($app['config']->get('ai')));
-        $this->app->singleton(EmbeddingManager::class, fn (Application $app) => new EmbeddingManager($app['config']->get('ai')));
+        $this->app->singleton(LlmManager::class, fn () => new LlmManager($this->aiConfig()));
+        $this->app->singleton(SttManager::class, fn () => new SttManager($this->aiConfig()));
+        $this->app->singleton(TtsManager::class, fn () => new TtsManager($this->aiConfig()));
+        $this->app->singleton(EmbeddingManager::class, fn () => new EmbeddingManager($this->aiConfig()));
 
         $this->app->bind(LlmClient::class, fn (Application $app) => $app->make(LlmManager::class)->for('chat'));
         $this->app->bind(SttClient::class, fn (Application $app) => $app->make(SttManager::class)->default());
         $this->app->bind(TtsClient::class, fn (Application $app) => $app->make(TtsManager::class)->default());
         $this->app->bind(EmbeddingClient::class, fn (Application $app) => $app->make(EmbeddingManager::class)->default());
+    }
+
+    /** @return array<string, mixed> */
+    private function aiConfig(): array
+    {
+        $config = config('ai');
+
+        return is_array($config) ? $config : [];
     }
 }

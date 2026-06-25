@@ -69,7 +69,11 @@ final class SemanticChunker
         return $chunks;
     }
 
-    /** Retire et renvoie la dernière ligne non vide du buffer (la légende). */
+    /**
+     * Retire et renvoie la dernière ligne non vide du buffer (la légende).
+     *
+     * @param  array<int, string>  $buffer
+     */
     private function popCaption(array &$buffer): ?string
     {
         for ($j = count($buffer) - 1; $j >= 0; $j--) {
@@ -87,6 +91,7 @@ final class SemanticChunker
     /**
      * Collecte les lignes du tableau à partir de l'index $start.
      *
+     * @param  array<int, string>  $lines
      * @return array{0:string, 1:int} [markdown du tableau, index de la dernière ligne consommée]
      */
     private function collectTable(array $lines, int $start, int $count): array

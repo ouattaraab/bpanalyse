@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Services\Document\Contracts\StructuredDataService;
 use App\Services\Document\FinancialQueryService;
 use App\Services\Ingestion\Contracts\DocumentParser;
 use App\Services\Ingestion\DoclingParser;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,13 +17,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(DocumentParser::class, function (Application $app): DoclingParser {
-            $config = $app['config']->get('ingestion.docling');
+        $this->app->bind(DocumentParser::class, function (): DoclingParser {
+            $config = config('ingestion.docling');
+            $config = is_array($config) ? $config : [];
 
             return new DoclingParser(
-                python: (string) $config['python'],
-                script: (string) $config['script'],
-                timeout: (int) $config['timeout'],
+                python: (string) ($config['python'] ?? ''),
+                script: (string) ($config['script'] ?? ''),
+                timeout: (int) ($config['timeout'] ?? 600),
             );
         });
 

@@ -78,7 +78,7 @@ final class DebateOrchestrator
 
         DebateCompleted::dispatch($debate);
 
-        $this->audit->log($debate->session, null, 'debate', $question, $sourceList, $client->provider(), null);
+        $this->audit->log($debate->session()->firstOrFail(), null, 'debate', $question, $sourceList, $client->provider(), null);
     }
 
     private function verifiedFiguresBlock(int $documentId): string

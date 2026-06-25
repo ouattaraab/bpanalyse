@@ -24,7 +24,7 @@ class VoiceAnswerController extends Controller
             'voice_model_id' => ['required', 'integer', 'exists:voice_models,id'],
         ]);
 
-        $model = VoiceModel::findOrFail($validated['voice_model_id']);
+        $model = VoiceModel::findOrFail((int) $validated['voice_model_id']);
 
         try {
             $path = $voice->synthesize($interaction, $model);

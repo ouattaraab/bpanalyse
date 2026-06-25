@@ -63,6 +63,11 @@ final class ConsentService
             throw new ConsentException('Modèle vocal révoqué : synthèse interdite.');
         }
 
-        $this->assertActive($model->consent);
+        $consent = $model->consent;
+        if ($consent === null) {
+            throw new ConsentException('Modèle vocal sans consentement : synthèse interdite.');
+        }
+
+        $this->assertActive($consent);
     }
 }

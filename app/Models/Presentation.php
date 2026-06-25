@@ -7,6 +7,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $explorer_session_id
+ * @property int $document_id
+ * @property string $question
+ * @property array<int, array{slide_id: int, narration: string, duree: int}> $script
+ * @property string $status
+ * @property int|null $duration_total
+ */
 class Presentation extends Model
 {
     protected $fillable = [

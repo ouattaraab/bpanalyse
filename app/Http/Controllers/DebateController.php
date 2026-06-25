@@ -27,7 +27,9 @@ class DebateController extends Controller
         // Asynchrone : déroulé via queue:work (live), ou immédiat en mode sync.
         RunDebateJob::dispatch($debate->id);
 
-        return DebateResource::make($debate->fresh()->load('turns'))
+        $debate->refresh()->load('turns');
+
+        return DebateResource::make($debate)
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
