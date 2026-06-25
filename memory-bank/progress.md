@@ -72,10 +72,11 @@
 - [x] 6.3 — Conformité Loi 2013-450/ARTCI : registre (finalité, durée, base légale) sur voice_consents
       `TtsClient::deleteVoice` ajouté ; ElevenLabs clone/synthèse/delete (HTTP réel, fakeable). 7 tests verts.
 - [ ] 2.3 — Réponse en voix clonée (P1, sous consentement)
-- [ ] 5.1 — Épinglage de session `[pinned_items]`
-- [ ] 5.2 — Export compte rendu DOCX/PDF
-- [ ] 5.3 — Audit de toute réponse (couverture tous modes)
-- [ ] 5.4 — Session éphémère + purge programmée (P1)
+- [x] 5.1 — Épinglage de session `[pinned_items]` — PinService + API
+- [x] 5.2 — Export compte rendu DOCX/PDF — ReportExporter (PhpWord + Dompdf)
+- [x] 5.3 — Audit de toute réponse (couverture chat/présentation/débat) — endpoint GET /sessions/{uuid}/audit
+- [x] 5.4 — Session éphémère + purge programmée — SessionPurger + `sessions:purge` (planifié horaire)
+      Epic 5 : 7 tests verts (épinglage, export DOCX+PDF, audit, purge).
 
 ### Phase 5 (post-MVP) — Epic 7 DocumentProfile
 - [ ] 7.1→7.6 — Extraction de l'abstraction au 2e type de document (PAS avant)

@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\AuditController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ConsentController;
 use App\Http\Controllers\DebateController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\ExportController;
+use App\Http\Controllers\PinController;
 use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TranscriptionController;
@@ -31,6 +34,13 @@ Route::get('/presentations/{presentation}', [PresentationController::class, 'sho
 // --- Débat du board (Epic 4) ---
 Route::post('/sessions/{session}/debates', [DebateController::class, 'start']);
 Route::get('/debates/{debate}', [DebateController::class, 'show']);
+
+// --- Session : épinglage, compte rendu, audit (Epic 5) ---
+Route::get('/sessions/{session}/pins', [PinController::class, 'index']);
+Route::post('/sessions/{session}/pins', [PinController::class, 'store']);
+Route::delete('/pins/{pin}', [PinController::class, 'destroy']);
+Route::get('/sessions/{session}/export', [ExportController::class, 'download']);
+Route::get('/sessions/{session}/audit', [AuditController::class, 'index']);
 
 // --- Gouvernance voix (Epic 6) ---
 Route::post('/tenants/{tenant}/voice-consents', [ConsentController::class, 'store']);

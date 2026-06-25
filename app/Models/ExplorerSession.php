@@ -53,4 +53,10 @@ class ExplorerSession extends Model
     {
         return $this->hasMany(Interaction::class);
     }
+
+    /** @return HasMany<PinnedItem, $this> */
+    public function pinnedItems(): HasMany
+    {
+        return $this->hasMany(PinnedItem::class)->latest();
+    }
 }
