@@ -30,20 +30,22 @@ Tests : 72 backend + 5 front. Build front OK.
 
 Pour une démo complète : `php artisan queue:work` (dérouler l'ingestion) + `npm run dev` + `php artisan serve`.
 
-## Phases 2 et 3 COMPLÈTES ✅
-- **Phase 2 (présentation express)** : SlideSelector + NarrationGenerator + PresentationService ;
-  front PresentationPlayer (Reveal.js) + SpeechSynthesis.
-- **Phase 3 (débat du board)** : DebatePersonas (4), DebateOrchestrator (Claude), FinancialVerifier
-  (déterministe), RunDebateJob ; front DebateView (répliques + chiffres ✓/⚠). API
-  `POST /sessions/{uuid}/debates`, `GET /debates/{id}`.
-Tests : **81 backend + 5 front**. Builds OK. Tout poussé sur `main`.
+## TOUTES LES PHASES MVP COMPLÈTES (0 → 4) ✅
+- Phase 0 : ingestion (Docling, chunking, embeddings bge-m3, extraction financière).
+- Phase 1 : chat RAG sourcé + STT + FinancialQueryService (+ front chat vocal).
+- Phase 2 : présentation express (Reveal.js + SpeechSynthesis).
+- Phase 3 : débat du board (4 personas, vérification déterministe des chiffres) + front.
+- Phase 4 : gouvernance voix (consentement/modèle révocable, ARTCI/Loi 2013-450), réponse en voix
+  clonée (gardée), épinglage, export compte rendu DOCX/PDF, audit, purge des sessions.
 
-Les 3 différenciateurs sont en place : chat RAG sourcé, présentation express, débat avec vérif chiffres.
+Tests : **97 backend + 5 front**. Tout poussé sur `main`.
 
-## Prochaine action — Phase 4 (voix clonée + gouvernance + session/compte rendu)
-Epics 6 (consentement/modèle vocal révocable, AVANT toute synthèse clonée), 2.3 (réponse en voix
-clonée), 5 (épinglage, export DOCX/PDF, audit/couverture, purge sessions). C'est ici que la voix
-clonée du dirigeant (ElevenLabs) s'implémente, avec sa gouvernance ARTCI/Loi 2013-450.
+## Reste à faire (non bloquant MVP)
+- Front des features Phase 4 (consentement, épinglage/export, bouton « écouter en voix clonée »).
+- Front présentation/débat déjà branchés ; chat branché. Polir l'UI globale.
+- Diffusion live du débat via Reverb (option, déjà installé).
+- Validation runtime avec vraies clés (Groq/Claude/Deepgram/ElevenLabs) sur un vrai BP de bout en bout.
+- **Phase 5 (post-MVP)** : DocumentProfile (Epic 7) au 2e type de document — NE PAS faire avant.
 
 Story 1.2 livrée : intégration Docling en **Python via process**.
 - `tools/docling/parse.py` (venv dédié `tools/docling/.venv`, requirements.txt) → JSON structuré.

@@ -10,6 +10,7 @@ use App\Http\Controllers\PinController;
 use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TranscriptionController;
+use App\Http\Controllers\VoiceAnswerController;
 use App\Http\Controllers\VoiceModelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::get('/documents/{document}', [DocumentController::class, 'show']);
 Route::post('/documents/{document}/sessions', [SessionController::class, 'store']);
 Route::post('/sessions/{session}/chat', [ChatController::class, 'ask']);
 Route::post('/sessions/{session}/transcribe', [TranscriptionController::class, 'store']);
+Route::post('/interactions/{interaction}/voice', [VoiceAnswerController::class, 'store']); // réponse en voix clonée (2.3)
 
 // --- Présentation express (Epic 3) ---
 Route::post('/sessions/{session}/presentations', [PresentationController::class, 'store']);

@@ -71,7 +71,9 @@
 - [x] 6.2 — Modèle vocal isolé/révocable `[voice_models]` — VoiceModelService (clone gardé, révoque = delete provider + tombstone)
 - [x] 6.3 — Conformité Loi 2013-450/ARTCI : registre (finalité, durée, base légale) sur voice_consents
       `TtsClient::deleteVoice` ajouté ; ElevenLabs clone/synthèse/delete (HTTP réel, fakeable). 7 tests verts.
-- [ ] 2.3 — Réponse en voix clonée (P1, sous consentement)
+- [x] 2.3 — Réponse en voix clonée (sous consentement) — VoiceAnswerService gardé par ConsentService,
+      `POST /interactions/{id}/voice`. 2 tests verts.
+      ✅ **PHASE 4 COMPLÈTE** — voix clonée + gouvernance + session/compte rendu.
 - [x] 5.1 — Épinglage de session `[pinned_items]` — PinService + API
 - [x] 5.2 — Export compte rendu DOCX/PDF — ReportExporter (PhpWord + Dompdf)
 - [x] 5.3 — Audit de toute réponse (couverture chat/présentation/débat) — endpoint GET /sessions/{uuid}/audit
