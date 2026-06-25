@@ -97,9 +97,15 @@ export default function DebateView({ debate: initial, onClose }) {
             </div>
 
             <div className="scroll-fine mx-auto w-full max-w-3xl flex-1 space-y-3 overflow-y-auto">
-                {turns.length === 0 && (
+                {turns.length === 0 && debate.status !== 'failed' && (
                     <p className="rounded-2xl bg-white/5 px-4 py-6 text-center text-sm text-white/60">
                         Le débat se prépare… (en local, lancez <code className="text-white/80">php artisan queue:work</code>)
+                    </p>
+                )}
+                {turns.length === 0 && debate.status === 'failed' && (
+                    <p className="rounded-2xl bg-[#3a2420] px-4 py-6 text-center text-sm text-[#F2C7BF]">
+                        Le débat n’a pas pu aboutir. Vérifiez que le worker tourne
+                        (<code className="text-white/80">php artisan queue:work</code>) et que les clés LLM sont configurées.
                     </p>
                 )}
 
