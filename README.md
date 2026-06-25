@@ -41,7 +41,7 @@ auto-hébergée via une seule variable.
 ## Démarrage
 
 ### Prérequis
-PHP 8.3+, Composer, Node 20+, PostgreSQL 16 + `pgvector`, Python 3 (Docling + bge-m3 locaux).
+PHP 8.4+, Composer, Node 20+, PostgreSQL 16 + `pgvector`, Python 3 (Docling + bge-m3 locaux).
 
 ```bash
 # Dépendances
