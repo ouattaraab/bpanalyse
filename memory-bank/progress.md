@@ -6,14 +6,14 @@
 - Décisions techniques : routage LLM hybride Groq/Claude ; abstraction DocumentProfile cadrée pour plus tard.
 - Kit de démarrage : CLAUDE.md, docs, interfaces IA, config/ai.php, memory-bank.
 
-## En cours
-- Scaffolding + **Phase 0 (Epic 1) COMPLÈTE** : Laravel 11.54, PostgreSQL 17 + pgvector 0.8.3,
-  Reverb, routing API, Pest ; bindings IA (managers + providers) ; front React 18/Vite/Tailwind/
-  Reveal.js/Echo. Pipeline d'ingestion bout en bout (`bp:ingest`) : intake → Docling → chunking →
-  embeddings bge-m3 souverains → extraction financière déterministe. **53 tests verts.** Poussé sur `main`.
-- Outils Python souverains via process : `tools/docling/` (parsing) et `tools/embeddings/` (bge-m3),
-  venvs gitignorés.
-- Prochaine action : **Phase 1** (chat RAG sourcé + FinancialQueryService + STT).
+## État — MVP COMPLET (Phases 0→4) ✅
+- Toutes les phases livrées, testées (**98 backend + 6 front**), poussées sur `main`.
+- Pile souveraine locale **validée en réel** (ingestion → indexed, dim 1024, extraction financière).
+- **UI polie** : design system « Editorial board room » (Fraunces + Hanken Grotesk, palette papier/encre/viridian),
+  toutes les vues refondues + accessibilité. Captures réalisées (accueil, débat, présentation, compte rendu, voix).
+- **Doc + CI** : README à jour (produit réel) + GitHub Actions (Pest avec pgvector + Vitest + build).
+- ⏳ Reste : validation des features cloud (clés .env — « plus tard »), via `php artisan bp:validate-cloud`.
+  Post-MVP : Epic 7 `DocumentProfile` (au 2e type de document, pas avant).
 
 ## À faire (par phase — détail dans implementationPlan.md)
 
