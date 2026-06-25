@@ -40,6 +40,16 @@ Pour une démo complète : `php artisan queue:work` (dérouler l'ingestion) + `n
 
 Tests : **97 backend + 5 front**. Tout poussé sur `main`.
 
+## Validation end-to-end
+- ✅ **Pile souveraine locale validée en réel** : `bp:ingest` sur un vrai document →
+  Docling (32 chunks) → embeddings bge-m3 (pgvector, dim 1024) → extraction financière (84 mesures) →
+  statut `indexed`. `FinancialQueryService` requête les vraies données (capabilities OK).
+  ⚠ Lancer l'ingestion via `queue:work`, PAS en `QUEUE_CONNECTION=sync` (sinon Docling + bge-m3
+  empilent torch en mémoire → timeout/OOM sur machine contrainte). Timeout embeddings porté à 1800s.
+- ⏳ **Features cloud (Groq/Claude/Deepgram/ElevenLabs)** : clés non encore fournies (« plus tard »).
+  Commande prête : `php artisan bp:validate-cloud {document_id}` exécute chat + présentation + débat
+  avec les vrais providers et signale OK/échec par service.
+
 ## Reste à faire (non bloquant MVP)
 - Front des features Phase 4 (consentement, épinglage/export, bouton « écouter en voix clonée »).
 - Front présentation/débat déjà branchés ; chat branché. Polir l'UI globale.
