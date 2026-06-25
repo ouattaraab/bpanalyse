@@ -8,6 +8,13 @@ const PERSONA_TONE = {
     sales: 'bg-[#EAE6F2] text-[#5b4a86]',
 };
 
+/** Fusionne des répliques en dédupliquant par turn_index, triées. */
+function upsertTurns(existing, incoming) {
+    const byIndex = new Map((existing ?? []).map((t) => [t.turn_index, t]));
+    (incoming ?? []).forEach((t) => byIndex.set(t.turn_index, t));
+    return [...byIndex.values()].sort((a, b) => a.turn_index - b.turn_index);
+}
+
 function FiguresBadges({ figures }) {
     if (!figures || figures.length === 0) return null;
     return (
@@ -31,14 +38,35 @@ function FiguresBadges({ figures }) {
 
 export default function DebateView({ debate: initial, onClose }) {
     const [debate, setDebate] = useState(initial);
+    const [live, setLive] = useState(false);
     const timerRef = useRef(null);
 
+    // Temps réel via Reverb/Echo (canal public debate.{id}).
+    useEffect(() => {
+        const echo = typeof window !== 'undefined' ? window.Echo : null;
+        if (!echo) return undefined;
+
+        const name = `debate.${initial.id}`;
+        const channel = echo.channel(name);
+        channel.listen('.turn.created', (turn) => {
+            setLive(true);
+            setDebate((prev) => ({ ...prev, turns: upsertTurns(prev.turns, [turn]) }));
+        });
+        channel.listen('.debate.completed', () => {
+            setDebate((prev) => ({ ...prev, status: 'completed' }));
+        });
+
+        return () => echo.leave(name);
+    }, [initial.id]);
+
+    // Polling de repli (si Reverb indisponible) jusqu'à completion.
     useEffect(() => {
         const running = debate.status === 'pending' || debate.status === 'running';
         if (!running) return undefined;
         timerRef.current = setInterval(async () => {
             try {
-                setDebate(await getDebate(initial.id));
+                const fresh = await getDebate(initial.id);
+                setDebate((prev) => ({ ...fresh, turns: upsertTurns(prev.turns, fresh.turns) }));
             } catch {
                 /* retry */
             }
@@ -53,7 +81,14 @@ export default function DebateView({ debate: initial, onClose }) {
         <div className="scene-veil fixed inset-0 z-50 flex flex-col p-4 motion-safe:animate-fade-in sm:p-6">
             <div className="mx-auto flex w-full max-w-3xl items-center justify-between pb-4 text-white">
                 <div className="min-w-0">
-                    <p className="text-xs uppercase tracking-[0.18em] text-white/55">Débat du board</p>
+                    <p className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-white/55">
+                        Débat du board
+                        {live && (
+                            <span className="inline-flex items-center gap-1 text-brand-100">
+                                <span className="h-1.5 w-1.5 rounded-full bg-brand-100 motion-safe:animate-pulse" /> en direct
+                            </span>
+                        )}
+                    </p>
                     <p className="truncate font-display text-lg">{debate.question}</p>
                 </div>
                 <button onClick={onClose} className="rounded-full px-3 py-1.5 text-sm text-white/80 hover:bg-white/10" type="button">

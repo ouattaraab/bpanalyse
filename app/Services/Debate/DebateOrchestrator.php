@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Debate;
 
+use App\Events\DebateCompleted;
+use App\Events\DebateTurnCreated;
 use App\Models\Debate;
 use App\Services\AI\LlmManager;
 use App\Services\Audit\AuditLogger;
@@ -57,7 +59,7 @@ final class DebateOrchestrator
                 ['role' => 'user', 'content' => $this->userPrompt($question, $transcript)],
             ], ['temperature' => 0.4, 'max_tokens' => 500]));
 
-            $debate->turns()->create([
+            $turn = $debate->turns()->create([
                 'turn_index' => $i,
                 'persona' => $persona['key'],
                 'persona_name' => $persona['name'],
@@ -66,10 +68,15 @@ final class DebateOrchestrator
                 'verified_figures' => $this->verifier->verify($documentId, $reply),
             ]);
 
+            // Diffusion temps réel (Reverb) : la réplique s'affiche en direct.
+            DebateTurnCreated::dispatch($turn);
+
             $transcript[] = "{$persona['name']} : {$reply}";
         }
 
         $debate->update(['status' => 'completed']);
+
+        DebateCompleted::dispatch($debate);
 
         $this->audit->log($debate->session, null, 'debate', $question, $sourceList, $client->provider(), null);
     }
