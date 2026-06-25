@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint:
-    name: Style (Pint)
+    name: Style + Analyse (Pint + PHPStan)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,6 +20,8 @@ jobs:
         run: composer install --no-interaction --prefer-dist --no-progress
       - name: Pint (check)
         run: ./vendor/bin/pint --test
+      - name: PHPStan
+        run: ./vendor/bin/phpstan analyse --no-progress --memory-limit=512M
 
   backend:
     name: Backend (Pest)

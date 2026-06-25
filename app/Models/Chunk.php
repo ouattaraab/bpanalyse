@@ -10,6 +10,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $document_id
+ * @property int|null $document_slide_id
+ * @property string|null $section
+ * @property ChunkType $type
+ * @property string $content
+ * @property string|null $caption
+ * @property array<string, mixed>|null $metadata
+ */
 class Chunk extends Model
 {
     /** @use HasFactory<ChunkFactory> */

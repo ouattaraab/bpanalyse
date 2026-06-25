@@ -9,7 +9,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property int $id
+ * @property string $uuid
+ * @property int $tenant_id
+ * @property int $document_id
+ * @property string $status
+ * @property Carbon|null $started_at
+ * @property Carbon|null $expires_at
+ */
 class ExplorerSession extends Model
 {
     /** @use HasFactory<ExplorerSessionFactory> */

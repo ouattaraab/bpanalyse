@@ -78,12 +78,13 @@ final class FinancialQueryService implements StructuredDataService
             ->selectRaw('label, unit, MIN(period_year) as first_year, MAX(period_year) as last_year, COUNT(*) as points')
             ->orderBy('label')
             ->get()
-            ->map(static fn ($r): array => [
+            ->map(static fn (FinancialMetric $r): array => [
                 'label' => $r->label,
                 'unit' => $r->unit,
-                'first_year' => $r->first_year !== null ? (int) $r->first_year : null,
-                'last_year' => $r->last_year !== null ? (int) $r->last_year : null,
-                'points' => (int) $r->points,
+                // first_year / last_year / points sont des agrégats SQL (alias dynamiques).
+                'first_year' => $r->getAttribute('first_year') !== null ? (int) $r->getAttribute('first_year') : null,
+                'last_year' => $r->getAttribute('last_year') !== null ? (int) $r->getAttribute('last_year') : null,
+                'points' => (int) $r->getAttribute('points'),
             ])
             ->all();
     }

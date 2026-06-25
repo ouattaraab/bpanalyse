@@ -97,6 +97,15 @@ it("n'expose jamais le chemin de stockage interne", function () {
     expect($response->json('data'))->not->toHaveKey('original_path');
 });
 
+it('expose le statut d\'un document via GET /documents/{id}', function () {
+    $document = Document::factory()->create(['status' => DocumentStatus::Indexed]);
+
+    $this->getJson("/api/documents/{$document->id}")
+        ->assertOk()
+        ->assertJsonPath('data.id', $document->id)
+        ->assertJsonPath('data.status', 'indexed');
+});
+
 it('rattache au tenant « default » et lance le pipeline sans tenant fourni', function () {
     $this->postJson('/api/documents', [
         'file' => UploadedFile::fake()->createWithContent('bp.pdf', "%PDF-1.4\n"),

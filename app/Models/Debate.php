@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property int $explorer_session_id
+ * @property int $document_id
+ * @property string $question
+ * @property string $status
+ * @property array<string, mixed>|null $stop_condition
+ */
 class Debate extends Model
 {
     protected $fillable = [

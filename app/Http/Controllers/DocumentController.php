@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDocumentRequest;
 use App\Http\Resources\DocumentResource;
+use App\Models\Document;
 use App\Models\Tenant;
 use App\Services\Ingestion\DocumentIntakeService;
 use App\Services\Ingestion\IngestionPipeline;

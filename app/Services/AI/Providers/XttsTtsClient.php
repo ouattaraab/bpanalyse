@@ -18,12 +18,12 @@ final class XttsTtsClient implements TtsClient
 
     public function synthesize(string $text, ?string $voiceId = null, array $options = []): string
     {
-        throw new RuntimeException('XttsTtsClient::synthesize à implémenter (story 2.3).');
+        throw new RuntimeException("XttsTtsClient::synthesize à implémenter (story 2.3) @ {$this->baseUrl}.");
     }
 
     public function cloneVoice(array $samplePaths, string $consentReference): string
     {
-        throw new RuntimeException('XttsTtsClient::cloneVoice à implémenter (story 6.2, consentement requis).');
+        throw new RuntimeException("XttsTtsClient::cloneVoice à implémenter (story 6.2, consentement requis) @ {$this->baseUrl}.");
     }
 
     public function deleteVoice(string $voiceId): void

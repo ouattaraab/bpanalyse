@@ -20,7 +20,7 @@ final class WhisperSttClient implements SttClient
 
     public function transcribe(string $audioPath, array $options = []): array
     {
-        throw new RuntimeException('WhisperSttClient::transcribe à implémenter (story 2.2).');
+        throw new RuntimeException("WhisperSttClient::transcribe à implémenter (story 2.2) — {$this->model} @ {$this->baseUrl}.");
     }
 
     public function provider(): string

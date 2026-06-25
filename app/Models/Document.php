@@ -11,6 +11,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property int $tenant_id
+ * @property string $title
+ * @property string $type
+ * @property string $original_filename
+ * @property string $original_path
+ * @property string|null $mime
+ * @property int|null $size_bytes
+ * @property DocumentStatus $status
+ * @property int|null $page_count
+ * @property array<string, mixed>|null $meta
+ */
 class Document extends Model
 {
     /** @use HasFactory<DocumentFactory> */

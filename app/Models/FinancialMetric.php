@@ -7,6 +7,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $financial_table_id
+ * @property int $document_id
+ * @property string $label
+ * @property string|null $category
+ * @property string|null $period_label
+ * @property int|null $period_year
+ * @property float $value
+ * @property string|null $unit
+ * @property array<string, mixed>|null $source_ref
+ */
 class FinancialMetric extends Model
 {
     protected $fillable = [

@@ -6,7 +6,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property int $id
+ * @property int $voice_consent_id
+ * @property string $provider
+ * @property string $external_voice_id
+ * @property string $status
+ * @property Carbon|null $revoked_at
+ */
 class VoiceModel extends Model
 {
     protected $fillable = [

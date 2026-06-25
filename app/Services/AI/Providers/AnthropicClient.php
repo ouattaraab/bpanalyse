@@ -88,7 +88,7 @@ final class AnthropicClient implements LlmClient
         $system = [];
         $chat = [];
         foreach ($messages as $message) {
-            if (($message['role'] ?? null) === 'system') {
+            if ($message['role'] === 'system') {
                 $system[] = $message['content'];
             } else {
                 $chat[] = $message;

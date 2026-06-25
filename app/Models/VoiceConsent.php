@@ -7,7 +7,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property int $id
+ * @property int $tenant_id
+ * @property string $person_name
+ * @property string $purpose
+ * @property string $legal_basis
+ * @property string|null $signed_document_path
+ * @property string $status
+ * @property Carbon|null $granted_at
+ * @property Carbon|null $retention_until
+ * @property Carbon|null $revoked_at
+ */
 class VoiceConsent extends Model
 {
     protected $fillable = [

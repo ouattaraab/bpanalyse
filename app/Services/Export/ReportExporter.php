@@ -90,8 +90,8 @@ final class ReportExporter
     private function items(ExplorerSession $session): array
     {
         return $this->pins->forSession($session)->map(static fn (PinnedItem $item): array => [
-            'question' => (string) ($item->interaction?->question ?? ''),
-            'answer' => (string) ($item->interaction?->answer ?? ''),
+            'question' => (string) ($item->interaction->question ?? ''),
+            'answer' => (string) ($item->interaction->answer ?? ''),
             'note' => $item->note,
         ])->all();
     }

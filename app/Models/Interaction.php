@@ -7,6 +7,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $explorer_session_id
+ * @property int $document_id
+ * @property string $role
+ * @property string $mode
+ * @property string|null $question
+ * @property string|null $answer
+ * @property array<string, mixed>|null $meta
+ */
 class Interaction extends Model
 {
     protected $fillable = [
