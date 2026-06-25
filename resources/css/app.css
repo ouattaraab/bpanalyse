@@ -1,3 +1,72 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        @apply bg-paper text-ink font-sans;
+        font-feature-settings: 'ss01';
+        text-rendering: optimizeLegibility;
+    }
+
+    h1, h2, h3 {
+        @apply font-display tracking-tight;
+        font-optical-sizing: auto;
+    }
+
+    /* Focus visible cohérent (accessibilité). */
+    :focus-visible {
+        @apply outline-none ring-2 ring-brand-500/60 ring-offset-2 ring-offset-paper;
+    }
+
+    ::selection {
+        background-color: theme('colors.brand.100');
+        color: theme('colors.brand.700');
+    }
+}
+
+@layer components {
+    .surface-card {
+        @apply rounded-2xl border border-line bg-surface shadow-card;
+    }
+
+    /* Boutons : hiérarchie claire (primaire encre, accent marque, fantôme). */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+            transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-40;
+    }
+    .btn-primary {
+        @apply btn bg-ink text-paper hover:bg-ink-soft;
+    }
+    .btn-brand {
+        @apply btn bg-brand-500 text-white hover:bg-brand-600;
+    }
+    .btn-ghost {
+        @apply btn text-ink-soft hover:bg-ink/5;
+    }
+
+    /* Scrollbar discrète. */
+    .scroll-fine::-webkit-scrollbar {
+        width: 8px;
+    }
+    .scroll-fine::-webkit-scrollbar-thumb {
+        @apply rounded-full bg-ink/10;
+    }
+}
+
+/* Voile premium pour les scènes plein écran (présentation, débat, compte rendu, voix). */
+.scene-veil {
+    background: radial-gradient(120% 120% at 50% -10%, #2a3646 0%, #161d27 60%, #11161e 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}

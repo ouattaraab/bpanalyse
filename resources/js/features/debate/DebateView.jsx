@@ -2,26 +2,22 @@ import React, { useEffect, useRef, useState } from 'react';
 import { getDebate } from '../../lib/api';
 
 const PERSONA_TONE = {
-    dg: 'bg-blue-50 text-blue-700',
-    investor: 'bg-rose-50 text-rose-700',
-    cfo: 'bg-emerald-50 text-emerald-700',
-    sales: 'bg-violet-50 text-violet-700',
+    dg: 'bg-brand-50 text-brand-700',
+    investor: 'bg-[#F6E3DF] text-flag',
+    cfo: 'bg-warn-50 text-warn-700',
+    sales: 'bg-[#EAE6F2] text-[#5b4a86]',
 };
 
 function FiguresBadges({ figures }) {
     if (!figures || figures.length === 0) return null;
-
     return (
-        <div className="mt-2 flex flex-wrap gap-1.5">
+        <div className="mt-2.5 flex flex-wrap gap-1.5">
             {figures.map((figure, index) => {
                 const ok = figure.status === 'verifie';
                 return (
                     <span
                         key={index}
-                        className={
-                            'inline-flex items-center rounded-full px-2 py-0.5 text-xs ' +
-                            (ok ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-100 text-amber-800')
-                        }
+                        className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs ${ok ? 'bg-brand-50 text-brand-700' : 'bg-warn-50 text-warn-700'}`}
                         title={figure.matched_label ?? 'Chiffre non adossé aux données'}
                     >
                         {ok ? '✓' : '⚠'} {figure.value}
@@ -40,16 +36,13 @@ export default function DebateView({ debate: initial, onClose }) {
     useEffect(() => {
         const running = debate.status === 'pending' || debate.status === 'running';
         if (!running) return undefined;
-
         timerRef.current = setInterval(async () => {
             try {
-                const fresh = await getDebate(initial.id);
-                setDebate(fresh);
+                setDebate(await getDebate(initial.id));
             } catch {
-                // on réessaie au prochain tick
+                /* retry */
             }
         }, 2500);
-
         return () => clearInterval(timerRef.current);
     }, [debate.status, initial.id]);
 
@@ -57,36 +50,36 @@ export default function DebateView({ debate: initial, onClose }) {
     const running = debate.status === 'pending' || debate.status === 'running';
 
     return (
-        <div className="fixed inset-0 z-50 flex flex-col bg-slate-900/95 p-4">
-            <div className="mb-3 flex items-center justify-between text-white">
-                <div className="text-sm">
-                    <span className="font-medium">Débat du board</span>
-                    <span className="ml-2 text-slate-300">{debate.question}</span>
+        <div className="scene-veil fixed inset-0 z-50 flex flex-col p-4 motion-safe:animate-fade-in sm:p-6">
+            <div className="mx-auto flex w-full max-w-3xl items-center justify-between pb-4 text-white">
+                <div className="min-w-0">
+                    <p className="text-xs uppercase tracking-[0.18em] text-white/55">Débat du board</p>
+                    <p className="truncate font-display text-lg">{debate.question}</p>
                 </div>
-                <button onClick={onClose} className="rounded px-3 py-1 text-sm hover:bg-white/10" type="button">
-                    Fermer ✕
+                <button onClick={onClose} className="rounded-full px-3 py-1.5 text-sm text-white/80 hover:bg-white/10" type="button">
+                    Fermer
                 </button>
             </div>
 
-            <div className="flex-1 space-y-3 overflow-y-auto rounded-lg bg-white p-4">
+            <div className="scroll-fine mx-auto w-full max-w-3xl flex-1 space-y-3 overflow-y-auto">
                 {turns.length === 0 && (
-                    <p className="text-center text-sm text-slate-400">
-                        Le débat se prépare… (en local, lancez <code>php artisan queue:work</code>)
+                    <p className="rounded-2xl bg-white/5 px-4 py-6 text-center text-sm text-white/60">
+                        Le débat se prépare… (en local, lancez <code className="text-white/80">php artisan queue:work</code>)
                     </p>
                 )}
 
                 {turns.map((turn) => (
-                    <div key={turn.turn_index} className="rounded-xl border border-slate-200 p-3">
-                        <span className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${PERSONA_TONE[turn.persona] ?? 'bg-slate-100 text-slate-700'}`}>
+                    <div key={turn.turn_index} className="rounded-2xl bg-surface p-4 shadow-lift motion-safe:animate-rise-in">
+                        <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${PERSONA_TONE[turn.persona] ?? 'bg-ink/5 text-ink-soft'}`}>
                             {turn.persona_name}
                         </span>
-                        <p className="mt-2 whitespace-pre-wrap text-sm text-slate-800">{turn.content}</p>
+                        <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-ink">{turn.content}</p>
                         <FiguresBadges figures={turn.verified_figures} />
                     </div>
                 ))}
 
                 {running && turns.length > 0 && (
-                    <p className="text-center text-xs text-slate-400">Le débat se poursuit…</p>
+                    <p className="py-2 text-center text-xs text-white/45">Le débat se poursuit…</p>
                 )}
             </div>
         </div>
