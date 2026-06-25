@@ -74,6 +74,8 @@
 - [x] 2.3 — Réponse en voix clonée (sous consentement) — VoiceAnswerService gardé par ConsentService,
       `POST /interactions/{id}/voice`. 2 tests verts.
       ✅ **PHASE 4 COMPLÈTE** — voix clonée + gouvernance + session/compte rendu.
+- [x] Front Phase 4 : `PinnedPanel` (compte rendu + export DOCX/PDF), `VoiceGovernance` (consentement,
+      modèle vocal, révocation), boutons 📌 Épingler / 🔊 Écouter sur les réponses. Build OK, Vitest 6 verts.
 - [x] 5.1 — Épinglage de session `[pinned_items]` — PinService + API
 - [x] 5.2 — Export compte rendu DOCX/PDF — ReportExporter (PhpWord + Dompdf)
 - [x] 5.3 — Audit de toute réponse (couverture chat/présentation/débat) — endpoint GET /sessions/{uuid}/audit

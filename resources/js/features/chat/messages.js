@@ -9,5 +9,6 @@ export function assistantMessage(answer) {
         role: 'assistant',
         text: answer?.answer ?? '',
         sources: answer?.sources ?? [],
+        interactionId: answer?.interaction_id ?? null,
     };
 }

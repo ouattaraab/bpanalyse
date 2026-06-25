@@ -16,6 +16,13 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class ConsentController extends Controller
 {
+    public function index(Tenant $tenant): JsonResponse
+    {
+        $consents = $tenant->load('voiceConsents.voiceModels')->voiceConsents ?? collect();
+
+        return response()->json(['data' => ConsentResource::collection($consents)->resolve()]);
+    }
+
     public function store(StoreConsentRequest $request, Tenant $tenant, ConsentService $consents): JsonResponse
     {
         $signedPath = $request->hasFile('signed_document')

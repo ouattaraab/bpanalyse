@@ -91,7 +91,7 @@ export default function App() {
                             </p>
                         )}
                         <div className="flex-1">
-                            <ChatPanel session={session} />
+                            <ChatPanel session={session} tenantId={document?.tenant_id} />
                         </div>
                     </>
                 )}

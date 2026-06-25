@@ -45,6 +45,7 @@ Route::get('/sessions/{session}/export', [ExportController::class, 'download']);
 Route::get('/sessions/{session}/audit', [AuditController::class, 'index']);
 
 // --- Gouvernance voix (Epic 6) ---
+Route::get('/tenants/{tenant}/voice-consents', [ConsentController::class, 'index']);
 Route::post('/tenants/{tenant}/voice-consents', [ConsentController::class, 'store']);
 Route::delete('/voice-consents/{consent}', [ConsentController::class, 'destroy']);
 Route::post('/voice-consents/{consent}/voice-model', [VoiceModelController::class, 'store']);

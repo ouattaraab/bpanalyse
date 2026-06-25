@@ -74,3 +74,63 @@ export function transcribeAudio(sessionUuid, blob) {
         isForm: true,
     });
 }
+
+// --- Compte rendu (épinglage / export) ---
+export function pinInteraction(sessionUuid, interactionId, note) {
+    return request(`/sessions/${sessionUuid}/pins`, {
+        method: 'POST',
+        body: { interaction_id: interactionId, note },
+    });
+}
+
+export function listPins(sessionUuid) {
+    return request(`/sessions/${sessionUuid}/pins`);
+}
+
+export function unpin(pinId) {
+    return request(`/pins/${pinId}`, { method: 'DELETE' });
+}
+
+export function exportUrl(sessionUuid, format) {
+    return `${BASE}/sessions/${sessionUuid}/export?format=${format}`;
+}
+
+// --- Gouvernance voix ---
+export function listConsents(tenantId) {
+    return request(`/tenants/${tenantId}/voice-consents`);
+}
+
+export function grantConsent(tenantId, data) {
+    return request(`/tenants/${tenantId}/voice-consents`, { method: 'POST', body: data });
+}
+
+export function revokeConsent(consentId) {
+    return request(`/voice-consents/${consentId}`, { method: 'DELETE' });
+}
+
+export function createVoiceModel(consentId, files) {
+    const form = new FormData();
+    files.forEach((file) => form.append('samples[]', file));
+
+    return request(`/voice-consents/${consentId}/voice-model`, {
+        method: 'POST',
+        body: form,
+        isForm: true,
+    });
+}
+
+// Synthèse de la réponse en voix clonée → URL d'objet audio jouable.
+export async function synthesizeAnswer(interactionId, voiceModelId) {
+    const response = await fetch(`${BASE}/interactions/${interactionId}/voice`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'audio/mpeg' },
+        body: JSON.stringify({ voice_model_id: voiceModelId }),
+    });
+
+    if (!response.ok) {
+        const payload = await response.json().catch(() => ({}));
+        throw new Error(payload?.message || 'Synthèse vocale impossible.');
+    }
+
+    return URL.createObjectURL(await response.blob());
+}

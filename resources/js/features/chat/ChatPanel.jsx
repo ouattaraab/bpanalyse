@@ -4,10 +4,12 @@ import { useAudioRecorder } from './useAudioRecorder';
 import SourceList from './SourceList';
 import PresentationPlayer from '../presentation/PresentationPlayer';
 import DebateView from '../debate/DebateView';
-import { createPresentation, startDebate } from '../../lib/api';
+import PinnedPanel from '../report/PinnedPanel';
+import VoiceGovernance from '../voice/VoiceGovernance';
+import { createPresentation, startDebate, pinInteraction, synthesizeAnswer } from '../../lib/api';
 
 /** Chat vocal RAG : question écrite ou orale, réponse sourcée. */
-export default function ChatPanel({ session }) {
+export default function ChatPanel({ session, tenantId }) {
     const { messages, pending, error, send, transcribe } = useChat(session.uuid);
     const recorder = useAudioRecorder();
     const [input, setInput] = useState('');
@@ -18,6 +20,34 @@ export default function ChatPanel({ session }) {
 
     const [debate, setDebate] = useState(null);
     const [debateLoading, setDebateLoading] = useState(false);
+    const [showPins, setShowPins] = useState(false);
+    const [showVoice, setShowVoice] = useState(false);
+    const [activeVoiceModelId, setActiveVoiceModelId] = useState(null);
+    const [pinned, setPinned] = useState({});
+
+    const pinAnswer = async (interactionId) => {
+        if (!interactionId) return;
+        try {
+            await pinInteraction(session.uuid, interactionId);
+            setPinned((prev) => ({ ...prev, [interactionId]: true }));
+        } catch (e) {
+            setPresoError(e.message);
+        }
+    };
+
+    const listenAnswer = async (interactionId) => {
+        if (!interactionId) return;
+        if (!activeVoiceModelId) {
+            setPresoError('Aucun modèle vocal actif. Configurez-le dans « Voix ».');
+            return;
+        }
+        try {
+            const url = await synthesizeAnswer(interactionId, activeVoiceModelId);
+            new Audio(url).play();
+        } catch (e) {
+            setPresoError(e.message);
+        }
+    };
 
     const launchPresentation = async () => {
         const question = input.trim();
@@ -80,6 +110,23 @@ export default function ChatPanel({ session }) {
                 <PresentationPlayer presentation={presentation} onClose={() => setPresentation(null)} />
             )}
             {debate && <DebateView debate={debate} onClose={() => setDebate(null)} />}
+            {showPins && <PinnedPanel sessionUuid={session.uuid} onClose={() => setShowPins(false)} />}
+            {showVoice && (
+                <VoiceGovernance
+                    tenantId={tenantId}
+                    onClose={() => setShowVoice(false)}
+                    onActiveModel={setActiveVoiceModelId}
+                />
+            )}
+
+            <div className="flex items-center justify-end gap-2 border-b border-slate-100 pb-2">
+                <button type="button" onClick={() => setShowPins(true)} className="text-xs text-slate-500 hover:text-slate-800">
+                    📋 Compte rendu
+                </button>
+                <button type="button" onClick={() => setShowVoice(true)} className="text-xs text-slate-500 hover:text-slate-800">
+                    🎙 Voix
+                </button>
+            </div>
 
             <div className="flex-1 space-y-4 overflow-y-auto px-1 py-4">
                 {messages.length === 0 && (
@@ -101,7 +148,29 @@ export default function ChatPanel({ session }) {
                             }
                         >
                             <p className="whitespace-pre-wrap">{message.text}</p>
-                            {message.role === 'assistant' && <SourceList sources={message.sources} />}
+                            {message.role === 'assistant' && (
+                                <>
+                                    <SourceList sources={message.sources} />
+                                    {message.interactionId && (
+                                        <div className="mt-2 flex gap-3 text-xs text-slate-400">
+                                            <button
+                                                type="button"
+                                                onClick={() => pinAnswer(message.interactionId)}
+                                                className="hover:text-indigo-600"
+                                            >
+                                                {pinned[message.interactionId] ? '📌 Épinglée' : '📌 Épingler'}
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => listenAnswer(message.interactionId)}
+                                                className="hover:text-indigo-600"
+                                            >
+                                                🔊 Écouter
+                                            </button>
+                                        </div>
+                                    )}
+                                </>
+                            )}
                         </div>
                     </div>
                 ))}

@@ -28,6 +28,17 @@ function bindFakeTts(): TtsClient
     return $client;
 }
 
+it('liste les consentements d\'un tenant avec leurs modèles vocaux', function () {
+    $tenant = Tenant::factory()->create();
+    $consent = app(ConsentService::class)->grant($tenant, ['person_name' => 'DG', 'purpose' => 'Narration']);
+    $consent->voiceModels()->create(['provider' => 'elevenlabs', 'external_voice_id' => 'vid_9', 'status' => 'active']);
+
+    $this->getJson("/api/tenants/{$tenant->id}/voice-consents")
+        ->assertOk()
+        ->assertJsonPath('data.0.person_name', 'DG')
+        ->assertJsonPath('data.0.voice_models.0.provider', 'elevenlabs');
+});
+
 it('enregistre un consentement (finalité + durée) via l\'API', function () {
     $tenant = Tenant::factory()->create();
 

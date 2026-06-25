@@ -26,6 +26,7 @@ class ConsentResource extends JsonResource
             'retention_until' => $this->retention_until?->toDateString(),
             'revoked_at' => $this->revoked_at?->toIso8601String(),
             'active' => $this->isActive(),
+            'voice_models' => VoiceModelResource::collection($this->whenLoaded('voiceModels')),
         ];
     }
 }

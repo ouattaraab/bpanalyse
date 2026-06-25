@@ -20,4 +20,10 @@ class Tenant extends Model
     {
         return $this->hasMany(Document::class);
     }
+
+    /** @return HasMany<VoiceConsent, $this> */
+    public function voiceConsents(): HasMany
+    {
+        return $this->hasMany(VoiceConsent::class)->latest();
+    }
 }

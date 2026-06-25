@@ -15,6 +15,15 @@ describe('messages', () => {
     });
 
     it('applique des valeurs par défaut sûres', () => {
-        expect(assistantMessage(undefined)).toEqual({ role: 'assistant', text: '', sources: [] });
+        expect(assistantMessage(undefined)).toEqual({
+            role: 'assistant',
+            text: '',
+            sources: [],
+            interactionId: null,
+        });
+    });
+
+    it('transporte l\'identifiant d\'interaction pour l\'épinglage', () => {
+        expect(assistantMessage({ answer: 'x', interaction_id: 42 }).interactionId).toBe(42);
     });
 });
