@@ -26,8 +26,7 @@ final class BgeM3EmbeddingClient implements EmbeddingClient
         private readonly string $model = 'BAAI/bge-m3',
         private readonly int $dimensions = 1024,
         private readonly int $timeout = 600,
-    ) {
-    }
+    ) {}
 
     public function embed(array $texts): array
     {

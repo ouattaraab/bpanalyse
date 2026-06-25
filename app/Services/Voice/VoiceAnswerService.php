@@ -18,8 +18,7 @@ final class VoiceAnswerService
     public function __construct(
         private readonly ConsentService $consent,
         private readonly TtsManager $tts,
-    ) {
-    }
+    ) {}
 
     /** @return string chemin du fichier audio généré */
     public function synthesize(Interaction $interaction, VoiceModel $model): string

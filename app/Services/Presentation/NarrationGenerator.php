@@ -22,9 +22,7 @@ final class NarrationGenerator
     /** Débit de narration approximatif (mots / seconde). */
     private const WORDS_PER_SECOND = 2.5;
 
-    public function __construct(private readonly LlmManager $llm)
-    {
-    }
+    public function __construct(private readonly LlmManager $llm) {}
 
     /**
      * @param  Collection<int, DocumentSlide>  $slides
@@ -55,7 +53,7 @@ final class NarrationGenerator
     }
 
     /**
-     * @return array<int, string>  slide_id => narration
+     * @return array<int, string> slide_id => narration
      */
     private function parse(string $raw): array
     {
@@ -100,7 +98,7 @@ final class NarrationGenerator
         return implode(' ', [
             'Tu es un narrateur de présentation en français.',
             'Pour CHAQUE slide fournie, rédige 2 à 3 phrases de narration claires, en lien avec la question.',
-            "Tu ne calcules JAMAIS de chiffres : commente uniquement les valeurs présentes dans la slide.",
+            'Tu ne calcules JAMAIS de chiffres : commente uniquement les valeurs présentes dans la slide.',
             'Réponds STRICTEMENT en JSON : un tableau d\'objets {"slide_id": <entier>, "narration": "<texte>"}.',
         ]);
     }

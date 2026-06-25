@@ -15,12 +15,10 @@ use Illuminate\Support\Collection;
  */
 final class SlideSelector
 {
-    public function __construct(private readonly Retriever $retriever)
-    {
-    }
+    public function __construct(private readonly Retriever $retriever) {}
 
     /**
-     * @return Collection<int, DocumentSlide>  slides ordonnées par slide_index
+     * @return Collection<int, DocumentSlide> slides ordonnées par slide_index
      */
     public function select(int $documentId, string $question, int $min = 3, int $max = 6): Collection
     {

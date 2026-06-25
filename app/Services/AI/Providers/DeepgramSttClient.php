@@ -20,8 +20,7 @@ final class DeepgramSttClient implements SttClient
         private readonly string $apiKey,
         private readonly string $model = 'nova-2',
         private readonly string $language = 'fr',
-    ) {
-    }
+    ) {}
 
     public function transcribe(string $audioPath, array $options = []): array
     {

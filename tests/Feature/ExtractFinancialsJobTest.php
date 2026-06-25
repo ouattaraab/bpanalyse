@@ -8,7 +8,8 @@ use App\Models\Chunk;
 use App\Models\Document;
 use App\Services\AI\Contracts\LlmClient;
 use App\Services\Ingestion\FinancialTableExtractor;
-use Illuminate\Foundation\Testing\RefreshDatabase;use RuntimeException;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use RuntimeException;
 
 uses(RefreshDatabase::class);
 
@@ -40,7 +41,7 @@ it('extrait uniquement les tableaux financiers et trace la provenance', function
         'content' => 'Le marché est porteur.',
     ]);
 
-    (new ExtractFinancialsJob($document->id))->handle(new FinancialTableExtractor());
+    (new ExtractFinancialsJob($document->id))->handle(new FinancialTableExtractor);
 
     // Un seul tableau financier extrait.
     expect($document->financialTables()->count())->toBe(1)
@@ -59,7 +60,7 @@ it('réindexe en remplaçant les tableaux financiers existants', function () {
         'content' => "| Poste | 2025 |\n|---|---|\n| CA | 100 |",
     ]);
 
-    $run = fn () => (new ExtractFinancialsJob($document->id))->handle(new FinancialTableExtractor());
+    $run = fn () => (new ExtractFinancialsJob($document->id))->handle(new FinancialTableExtractor);
 
     $run();
     expect($document->financialMetrics()->count())->toBe(1);

@@ -22,9 +22,7 @@ final class ElevenLabsTtsClient implements TtsClient
 {
     private const BASE = 'https://api.elevenlabs.io/v1';
 
-    public function __construct(private readonly string $apiKey)
-    {
-    }
+    public function __construct(private readonly string $apiKey) {}
 
     public function synthesize(string $text, ?string $voiceId = null, array $options = []): string
     {

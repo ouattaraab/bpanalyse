@@ -28,8 +28,7 @@ final class EmbedChunksJob implements ShouldQueue
     public function __construct(
         public readonly int $documentId,
         public readonly int $batchSize = 256,
-    ) {
-    }
+    ) {}
 
     public function handle(EmbeddingClient $embedder): void
     {

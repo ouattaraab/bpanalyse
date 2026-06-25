@@ -29,8 +29,7 @@ final class DebateOrchestrator
         private readonly FinancialVerifier $verifier,
         private readonly LlmManager $llm,
         private readonly AuditLogger $audit,
-    ) {
-    }
+    ) {}
 
     public function run(Debate $debate): void
     {

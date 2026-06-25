@@ -18,8 +18,7 @@ final class VoiceModelService
     public function __construct(
         private readonly ConsentService $consent,
         private readonly TtsManager $tts,
-    ) {
-    }
+    ) {}
 
     /**
      * @param  array<int, string>  $samplePaths

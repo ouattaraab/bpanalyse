@@ -17,7 +17,7 @@ final class FinancialValueParser
     private const NON_VALUES = ['', '-', '—', '–', 'n/a', 'na', 'nd', 'n.d.', 'ns', '.', '...'];
 
     /**
-     * @return array{value: float, unit: ?string}|null  null si la cellule n'est pas numérique
+     * @return array{value: float, unit: ?string}|null null si la cellule n'est pas numérique
      */
     public static function parse(string $cell): ?array
     {

@@ -21,9 +21,7 @@ final class ExtractFinancialsJob implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public readonly int $documentId)
-    {
-    }
+    public function __construct(public readonly int $documentId) {}
 
     public function handle(FinancialTableExtractor $extractor): void
     {

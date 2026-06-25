@@ -25,8 +25,7 @@ final class RagService
         private readonly SourceFormatter $sources,
         private readonly LlmManager $llm,
         private readonly AuditLogger $audit,
-    ) {
-    }
+    ) {}
 
     public function answer(ExplorerSession $session, string $question, int $k = 6): Interaction
     {

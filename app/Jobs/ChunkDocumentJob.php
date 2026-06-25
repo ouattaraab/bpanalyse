@@ -20,9 +20,7 @@ final class ChunkDocumentJob implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public readonly int $documentId)
-    {
-    }
+    public function __construct(public readonly int $documentId) {}
 
     public function handle(SemanticChunker $chunker): void
     {

@@ -16,12 +16,10 @@ use Illuminate\Support\Collection;
  */
 final class Retriever
 {
-    public function __construct(private readonly EmbeddingClient $embedder)
-    {
-    }
+    public function __construct(private readonly EmbeddingClient $embedder) {}
 
     /**
-     * @return Collection<int, Chunk>  chunks triés par proximité (attribut `distance`)
+     * @return Collection<int, Chunk> chunks triés par proximité (attribut `distance`)
      */
     public function retrieve(int $documentId, string $query, int $k = 6): Collection
     {

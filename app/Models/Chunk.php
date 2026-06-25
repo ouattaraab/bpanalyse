@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\ChunkType;
+use Database\Factories\ChunkFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Chunk extends Model
 {
-    /** @use HasFactory<\Database\Factories\ChunkFactory> */
+    /** @use HasFactory<ChunkFactory> */
     use HasFactory;
 
     protected $fillable = [

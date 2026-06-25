@@ -19,13 +19,13 @@ use RuntimeException;
 final class AnthropicClient implements LlmClient
 {
     private const API_URL = 'https://api.anthropic.com/v1/messages';
+
     private const API_VERSION = '2023-06-01';
 
     public function __construct(
         private readonly string $apiKey,
         private readonly string $model,
-    ) {
-    }
+    ) {}
 
     public function complete(array $messages, array $options = []): string
     {
@@ -65,7 +65,7 @@ final class AnthropicClient implements LlmClient
                     'arguments' => $block['input'] ?? [],
                 ];
             } elseif (($block['type'] ?? null) === 'text') {
-                $text = ($text ?? '') . ($block['text'] ?? '');
+                $text = ($text ?? '').($block['text'] ?? '');
             }
         }
 

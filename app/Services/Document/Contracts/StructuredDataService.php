@@ -21,10 +21,9 @@ interface StructuredDataService
     /**
      * Exécute une requête structurée déterministe sur les données extraites.
      *
-     * @param  int  $documentId
      * @param  string  $query  requête paramétrée/validée (jamais du SQL libre du LLM)
      * @param  array<string, mixed>  $params
-     * @return array<int, array<string, mixed>>  lignes résultat, traçables vers la source
+     * @return array<int, array<string, mixed>> lignes résultat, traçables vers la source
      */
     public function query(int $documentId, string $query, array $params = []): array;
 

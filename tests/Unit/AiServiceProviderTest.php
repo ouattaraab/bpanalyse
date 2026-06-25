@@ -6,7 +6,6 @@ use App\Services\AI\Contracts\EmbeddingClient;
 use App\Services\AI\Contracts\LlmClient;
 use App\Services\AI\Contracts\SttClient;
 use App\Services\AI\Contracts\TtsClient;
-use App\Services\AI\EmbeddingManager;
 use App\Services\AI\LlmManager;
 use App\Services\AI\SttManager;
 use App\Services\AI\TtsManager;

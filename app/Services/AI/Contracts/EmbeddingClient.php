@@ -12,7 +12,7 @@ interface EmbeddingClient
 {
     /**
      * @param  array<int, string>  $texts
-     * @return array<int, array<int, float>>  un vecteur par texte
+     * @return array<int, array<int, float>> un vecteur par texte
      */
     public function embed(array $texts): array;
 

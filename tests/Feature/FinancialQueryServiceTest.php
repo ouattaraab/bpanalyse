@@ -35,7 +35,7 @@ beforeEach(function () {
     seedMetric($this->table, "Chiffre d'affaires", 2026, 150.0);
     seedMetric($this->table, 'Marge', 2024, 20.0, '%');
 
-    $this->service = new FinancialQueryService();
+    $this->service = new FinancialQueryService;
 });
 
 it('liste les postes financiers disponibles', function () {
@@ -80,7 +80,7 @@ it('exige le paramètre label pour get_metric', function () {
 })->throws(InvalidArgumentException::class);
 
 it('expose des capabilities pour le function calling', function () {
-    $names = collect((new FinancialQueryService())->capabilities())->pluck('name');
+    $names = collect((new FinancialQueryService)->capabilities())->pluck('name');
 
     expect($names)->toContain('list_metrics', 'get_metric', 'compare_periods');
 });

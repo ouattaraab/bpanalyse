@@ -16,9 +16,7 @@ use App\Services\Voice\Exceptions\ConsentException;
  */
 final class ConsentService
 {
-    public function __construct(private readonly TtsManager $tts)
-    {
-    }
+    public function __construct(private readonly TtsManager $tts) {}
 
     /**
      * @param  array<string, mixed>  $data

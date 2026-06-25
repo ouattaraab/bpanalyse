@@ -16,8 +16,7 @@ final class WhisperSttClient implements SttClient
     public function __construct(
         private readonly string $baseUrl,
         private readonly string $model = 'large-v3',
-    ) {
-    }
+    ) {}
 
     public function transcribe(string $audioPath, array $options = []): array
     {

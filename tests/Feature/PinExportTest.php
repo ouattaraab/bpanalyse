@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Document;
+use App\Services\Session\PinService;
 use App\Services\Session\SessionService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -39,7 +40,7 @@ it('épingle une réponse et liste les épingles', function () {
 
 it('exporte un compte rendu DOCX des réponses épinglées', function () {
     [$session, $interaction] = pinnableSession();
-    app(\App\Services\Session\PinService::class)->pin($session, $interaction, 'Important');
+    app(PinService::class)->pin($session, $interaction, 'Important');
 
     $this->get("/api/sessions/{$session->uuid}/export?format=docx")
         ->assertOk()
@@ -48,7 +49,7 @@ it('exporte un compte rendu DOCX des réponses épinglées', function () {
 
 it('exporte un compte rendu PDF', function () {
     [$session, $interaction] = pinnableSession();
-    app(\App\Services\Session\PinService::class)->pin($session, $interaction);
+    app(PinService::class)->pin($session, $interaction);
 
     $this->get("/api/sessions/{$session->uuid}/export?format=pdf")
         ->assertOk()

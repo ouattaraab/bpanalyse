@@ -17,10 +17,9 @@ interface TtsClient
     /**
      * Synthétise du texte en audio.
      *
-     * @param  string  $text
      * @param  string|null  $voiceId  identifiant de voix (clonée ou standard)
      * @param  array<string, mixed>  $options
-     * @return string  chemin du fichier audio généré
+     * @return string chemin du fichier audio généré
      */
     public function synthesize(string $text, ?string $voiceId = null, array $options = []): string;
 
@@ -30,7 +29,7 @@ interface TtsClient
      *
      * @param  array<int, string>  $samplePaths
      * @param  string  $consentReference  référence du consentement signé
-     * @return string  voiceId du modèle créé (stocké isolé, lié au consentement)
+     * @return string voiceId du modèle créé (stocké isolé, lié au consentement)
      */
     public function cloneVoice(array $samplePaths, string $consentReference): string;
 

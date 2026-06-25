@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Services\Ingestion\FinancialTableExtractor;
 
 beforeEach(function () {
-    $this->extractor = new FinancialTableExtractor();
+    $this->extractor = new FinancialTableExtractor;
 });
 
 it('extrait les mesures d\'un tableau financier avec valeurs exactes', function () {

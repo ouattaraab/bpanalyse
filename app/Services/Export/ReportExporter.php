@@ -8,7 +8,6 @@ use App\Models\ExplorerSession;
 use App\Models\PinnedItem;
 use App\Services\Session\PinService;
 use Dompdf\Dompdf;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
@@ -19,12 +18,10 @@ use PhpOffice\PhpWord\PhpWord;
  */
 final class ReportExporter
 {
-    public function __construct(private readonly PinService $pins)
-    {
-    }
+    public function __construct(private readonly PinService $pins) {}
 
     /**
-     * @return array{0:string, 1:string, 2:string}  [chemin du fichier, nom de téléchargement, mime]
+     * @return array{0:string, 1:string, 2:string} [chemin du fichier, nom de téléchargement, mime]
      */
     public function generate(ExplorerSession $session, string $format): array
     {
@@ -38,7 +35,7 @@ final class ReportExporter
     /** @return array{0:string, 1:string, 2:string} */
     private function docx(ExplorerSession $session): array
     {
-        $phpWord = new PhpWord();
+        $phpWord = new PhpWord;
         $docSection = $phpWord->addSection();
         $docSection->addTitle('Compte rendu — BP Explorer', 1);
         $docSection->addText('Session : '.$session->uuid);
@@ -78,7 +75,7 @@ final class ReportExporter
             .'h1{font-size:18px;} h2{font-size:14px;}</style></head><body>'
             .'<h1>Compte rendu — BP Explorer</h1><p>Session : '.e($session->uuid).'</p>'.$rows.'</body></html>';
 
-        $dompdf = new Dompdf();
+        $dompdf = new Dompdf;
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4');
         $dompdf->render();

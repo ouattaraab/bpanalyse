@@ -6,7 +6,7 @@ use App\Enums\ChunkType;
 use App\Services\Ingestion\SemanticChunker;
 
 beforeEach(function () {
-    $this->chunker = new SemanticChunker();
+    $this->chunker = new SemanticChunker;
 });
 
 it('transforme un tableau isolé en exactement un chunk de type table', function () {

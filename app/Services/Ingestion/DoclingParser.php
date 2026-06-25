@@ -24,8 +24,7 @@ final class DoclingParser implements DocumentParser
         private readonly string $python,
         private readonly string $script,
         private readonly int $timeout = 600,
-    ) {
-    }
+    ) {}
 
     public function parse(string $absolutePath): ParsedDocument
     {

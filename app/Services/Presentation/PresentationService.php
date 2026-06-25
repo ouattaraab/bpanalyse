@@ -20,8 +20,7 @@ final class PresentationService
         private readonly NarrationGenerator $narrator,
         private readonly AuditLogger $audit,
         private readonly LlmManager $llm,
-    ) {
-    }
+    ) {}
 
     public function create(ExplorerSession $session, string $question): Presentation
     {

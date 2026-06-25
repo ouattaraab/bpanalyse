@@ -11,7 +11,7 @@ uses(RefreshDatabase::class);
 it('démarre une session éphémère liée au document et au tenant', function () {
     $document = Document::factory()->create();
 
-    $session = (new SessionService())->start($document);
+    $session = (new SessionService)->start($document);
 
     expect($session->uuid)->not->toBeEmpty()
         ->and($session->document_id)->toBe($document->id)
@@ -23,7 +23,7 @@ it('démarre une session éphémère liée au document et au tenant', function (
 
 it('résout une session par son uuid', function () {
     $document = Document::factory()->create();
-    $service = new SessionService();
+    $service = new SessionService;
     $session = $service->start($document);
 
     expect($service->resolve($session->uuid)->id)->toBe($session->id);

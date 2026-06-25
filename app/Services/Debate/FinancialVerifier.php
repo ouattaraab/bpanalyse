@@ -17,9 +17,7 @@ use App\Services\Ingestion\Support\FinancialValueParser;
  */
 final class FinancialVerifier
 {
-    public function __construct(private readonly StructuredDataService $financial)
-    {
-    }
+    public function __construct(private readonly StructuredDataService $financial) {}
 
     /**
      * @return array<int, array{value:float, status:string, matched_label:?string}>

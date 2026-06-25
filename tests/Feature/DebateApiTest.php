@@ -52,7 +52,7 @@ it('déroule un débat tour-par-tour, sourcé et avec chiffres vérifiés', func
     // LLM (débat) : réplique contenant un chiffre réel (150) et un faux (999).
     $client = Mockery::mock(LlmClient::class);
     $client->shouldReceive('complete')->andReturn(
-        "Le CA 2026 atteint 150, mais certains avancent 999 [slide 1 · Finances]."
+        'Le CA 2026 atteint 150, mais certains avancent 999 [slide 1 · Finances].'
     );
     $client->shouldReceive('provider')->andReturn('claude');
     $llm = Mockery::mock(LlmManager::class);

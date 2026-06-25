@@ -22,8 +22,7 @@ class OpenAiCompatibleLlmClient implements LlmClient
         protected readonly string $apiKey,
         protected readonly string $model,
         protected readonly string $baseUrl,
-    ) {
-    }
+    ) {}
 
     public function complete(array $messages, array $options = []): string
     {

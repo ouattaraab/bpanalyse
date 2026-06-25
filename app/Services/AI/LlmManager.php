@@ -20,9 +20,7 @@ use InvalidArgumentException;
 class LlmManager
 {
     /** @param array<string, mixed> $config  contenu de config('ai') */
-    public function __construct(private readonly array $config)
-    {
-    }
+    public function __construct(private readonly array $config) {}
 
     /** Client LLM adapté à la feature demandée. */
     public function for(string $feature): LlmClient
@@ -66,7 +64,7 @@ class LlmManager
                 baseUrl: (string) $provider['base_url'],
             ),
             default => throw new InvalidArgumentException(
-                "Driver LLM non supporté : " . ($provider['driver'] ?? 'null')
+                'Driver LLM non supporté : '.($provider['driver'] ?? 'null')
             ),
         };
     }

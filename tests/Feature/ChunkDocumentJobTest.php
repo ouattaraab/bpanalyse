@@ -12,7 +12,7 @@ uses(RefreshDatabase::class);
 
 function runChunkJob(Document $document): void
 {
-    (new ChunkDocumentJob($document->id))->handle(new SemanticChunker());
+    (new ChunkDocumentJob($document->id))->handle(new SemanticChunker);
 }
 
 it('crée les chunks des slides en respectant 1 tableau = 1 chunk', function () {

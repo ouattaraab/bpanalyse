@@ -18,9 +18,7 @@ final class RunDebateJob implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public readonly int $debateId)
-    {
-    }
+    public function __construct(public readonly int $debateId) {}
 
     public function handle(DebateOrchestrator $orchestrator): void
     {

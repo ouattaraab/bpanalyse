@@ -17,8 +17,7 @@ final readonly class ParsedDocument
         public array $slides,
         public int $pageCount,
         public ?string $title = null,
-    ) {
-    }
+    ) {}
 
     /** @param array<string, mixed> $data */
     public static function fromArray(array $data): self

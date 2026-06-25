@@ -87,7 +87,7 @@ final class SemanticChunker
     /**
      * Collecte les lignes du tableau à partir de l'index $start.
      *
-     * @return array{0:string, 1:int}  [markdown du tableau, index de la dernière ligne consommée]
+     * @return array{0:string, 1:int} [markdown du tableau, index de la dernière ligne consommée]
      */
     private function collectTable(array $lines, int $start, int $count): array
     {

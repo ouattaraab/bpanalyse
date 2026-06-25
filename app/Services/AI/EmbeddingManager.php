@@ -15,9 +15,7 @@ use InvalidArgumentException;
 final class EmbeddingManager
 {
     /** @param array<string, mixed> $config  contenu de config('ai') */
-    public function __construct(private readonly array $config)
-    {
-    }
+    public function __construct(private readonly array $config) {}
 
     public function default(): EmbeddingClient
     {

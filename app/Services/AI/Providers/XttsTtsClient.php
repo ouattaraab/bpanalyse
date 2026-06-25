@@ -14,9 +14,7 @@ use RuntimeException;
  */
 final class XttsTtsClient implements TtsClient
 {
-    public function __construct(private readonly string $baseUrl)
-    {
-    }
+    public function __construct(private readonly string $baseUrl) {}
 
     public function synthesize(string $text, ?string $voiceId = null, array $options = []): string
     {

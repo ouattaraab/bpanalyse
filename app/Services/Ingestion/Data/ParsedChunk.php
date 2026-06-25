@@ -18,6 +18,5 @@ final readonly class ParsedChunk
         public string $content,
         public ?string $section = null,
         public ?string $caption = null,
-    ) {
-    }
+    ) {}
 }

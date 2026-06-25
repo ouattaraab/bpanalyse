@@ -15,8 +15,7 @@ final readonly class ParsedSlide
         public string $markdown,
         public ?string $title = null,
         public ?string $section = null,
-    ) {
-    }
+    ) {}
 
     /** @param array<string, mixed> $data */
     public static function fromArray(array $data): self

@@ -16,6 +16,5 @@ final readonly class ParsedMetric
         public ?string $periodLabel = null,
         public ?int $periodYear = null,
         public ?string $unit = null,
-    ) {
-    }
+    ) {}
 }
