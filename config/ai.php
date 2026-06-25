@@ -73,7 +73,8 @@ return [
                 'script'     => env('EMBEDDING_SCRIPT', base_path('tools/embeddings/embed.py')),
                 'model'      => env('EMBEDDING_MODEL', 'BAAI/bge-m3'),
                 'dimensions' => 1024,
-                'timeout'    => (int) env('EMBEDDING_TIMEOUT', 600),
+                // 1er chargement du modèle bge-m3 (~2,3 Go) parfois lent → marge large.
+                'timeout'    => (int) env('EMBEDDING_TIMEOUT', 1800),
             ],
         ],
     ],
