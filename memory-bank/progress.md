@@ -67,9 +67,10 @@
       ✅ **PHASE 3 COMPLÈTE** — débat du board de bout en bout (backend + front).
 
 ### Phase 4 — Voix / gouvernance / session / compte rendu (Epics 2.3, 5, 6)
-- [ ] 6.1 — Consentement écrit avant clonage `[voice_consents]`
-- [ ] 6.2 — Modèle vocal isolé/révocable `[voice_models]`
-- [ ] 6.3 — Conformité Loi 2013-450/ARTCI (registre, P1)
+- [x] 6.1 — Consentement écrit avant clonage `[voice_consents]` — ConsentService + API
+- [x] 6.2 — Modèle vocal isolé/révocable `[voice_models]` — VoiceModelService (clone gardé, révoque = delete provider + tombstone)
+- [x] 6.3 — Conformité Loi 2013-450/ARTCI : registre (finalité, durée, base légale) sur voice_consents
+      `TtsClient::deleteVoice` ajouté ; ElevenLabs clone/synthèse/delete (HTTP réel, fakeable). 7 tests verts.
 - [ ] 2.3 — Réponse en voix clonée (P1, sous consentement)
 - [ ] 5.1 — Épinglage de session `[pinned_items]`
 - [ ] 5.2 — Export compte rendu DOCX/PDF

@@ -17,7 +17,7 @@ use InvalidArgumentException;
  * (config ai.tts.require_consent_for_cloning). Le contrôle est appliqué
  * en amont par App\Services\Voice\ConsentService (Epic 6).
  */
-final class TtsManager
+class TtsManager
 {
     /** @param array<string, mixed> $config  contenu de config('ai') */
     public function __construct(private readonly array $config)

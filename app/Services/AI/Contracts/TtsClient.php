@@ -34,5 +34,11 @@ interface TtsClient
      */
     public function cloneVoice(array $samplePaths, string $consentReference): string;
 
+    /**
+     * Supprime un modèle vocal chez le provider. Appelé lors de la révocation
+     * du consentement (la révocation supprime le modèle vocal).
+     */
+    public function deleteVoice(string $voiceId): void;
+
     public function provider(): string;
 }

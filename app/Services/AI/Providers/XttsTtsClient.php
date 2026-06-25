@@ -28,6 +28,11 @@ final class XttsTtsClient implements TtsClient
         throw new RuntimeException('XttsTtsClient::cloneVoice à implémenter (story 6.2, consentement requis).');
     }
 
+    public function deleteVoice(string $voiceId): void
+    {
+        // Souverain : la suppression du modèle local sera gérée à l'implémentation XTTS.
+    }
+
     public function provider(): string
     {
         return 'xtts';

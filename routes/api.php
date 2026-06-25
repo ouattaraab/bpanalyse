@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ConsentController;
 use App\Http\Controllers\DebateController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TranscriptionController;
+use App\Http\Controllers\VoiceModelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +31,9 @@ Route::get('/presentations/{presentation}', [PresentationController::class, 'sho
 // --- Débat du board (Epic 4) ---
 Route::post('/sessions/{session}/debates', [DebateController::class, 'start']);
 Route::get('/debates/{debate}', [DebateController::class, 'show']);
+
+// --- Gouvernance voix (Epic 6) ---
+Route::post('/tenants/{tenant}/voice-consents', [ConsentController::class, 'store']);
+Route::delete('/voice-consents/{consent}', [ConsentController::class, 'destroy']);
+Route::post('/voice-consents/{consent}/voice-model', [VoiceModelController::class, 'store']);
+Route::delete('/voice-models/{voiceModel}', [VoiceModelController::class, 'destroy']);
